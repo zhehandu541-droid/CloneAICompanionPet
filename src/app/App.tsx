@@ -2210,21 +2210,25 @@ function ChatScreen({ pet, petName, userName, onBack, initialPrompt, onConsumeIn
     setShowPrompts(false);
     setTyping(true);
 
-    // Try the real companion (OpenAI GPT-5 Nano, via the /api/chat serverless
-    // function on Vercel) first. If it's unavailable — running `vite dev`
-    // locally without `vercel dev`, no OPENAI_API_KEY set yet, or a network
-    // hiccup — fall back to the scripted reply so chat never breaks.
+    // DIAGNOSTIC MODE — scripted fallback temporarily disabled on purpose so
+    // real /api/chat failures are visible instead of silently masked by
+    // pickReply(). Restore the pickReply() fallback in both branches below
+    // once /api/chat is confirmed to reliably return real text.
     fetch("/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: msg, history: priorMsgs, context: chatContext() }),
     })
-      .then(r => (r.ok ? r.json() : Promise.reject(new Error("chat api error"))))
-      .then((data: { reply?: string }) => {
-        setMsgs(m => [...m, { from: "pet", text: data.reply?.trim() || pickReply(msg) }]);
+      .then(async r => {
+        const data = await r.json().catch(() => ({}));
+        if (!r.ok) throw new Error(`api/chat ${r.status}: ${data?.error ?? "unknown error"}`);
+        return data as { reply?: string; source?: string };
       })
-      .catch(() => {
-        setMsgs(m => [...m, { from: "pet", text: pickReply(msg) }]);
+      .then(data => {
+        setMsgs(m => [...m, { from: "pet", text: data.reply ?? "" }]);
+      })
+      .catch(err => {
+        setMsgs(m => [...m, { from: "pet", text: `[/api/chat failed: ${err instanceof Error ? err.message : "unknown error"}]` }]);
       })
       .finally(() => setTyping(false));
   };

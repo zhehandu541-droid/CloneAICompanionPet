@@ -7,6 +7,18 @@
 // that talks to the real OpenAI API. The frontend calls POST /api/chat and
 // never sees the key.
 //
+// API used: Chat Completions (`openai.chat.completions.create`), NOT the
+// Responses API. Text is read from `completion.choices[0].message.content`.
+//
+// Known gotcha (root cause of a real bug, see comment near max_completion_tokens
+// below): GPT-5-family "reasoning" models — including gpt-5-nano — can spend
+// their entire max_completion_tokens budget on hidden reasoning tokens and
+// return message.content === "" with finish_reason "length", even though the
+// HTTP call itself succeeds. That looked, from the outside, like the AI
+// "wasn't being called" when it actually was — the response just had no
+// visible text in it. We now treat an empty reply as a failure (500) instead
+// of silently returning it with 200.
+//
 // Setup:
 //   1. npm install (pulls in the `openai` package, added to package.json)
 //   2. In the Vercel project settings, add an environment variable named
@@ -34,6 +46,7 @@ export default async function handler(req: any, res: any) {
   }
 
   if (!process.env.OPENAI_API_KEY) {
+    console.error("api/chat: OPENAI_API_KEY is not set.");
     res.status(500).json({ error: "OPENAI_API_KEY is not configured on the server." });
     return;
   }
@@ -64,15 +77,46 @@ export default async function handler(req: any, res: any) {
 
     const completion = await openai.chat.completions.create({
       model: "gpt-5-nano",
-      max_completion_tokens: 300,
+      // GPT-5-family reasoning models spend part of this budget on hidden
+      // reasoning tokens before writing any visible content. 300 was too
+      // tight and could leave zero tokens for the actual reply. 600 gives
+      // headroom; reasoning_effort: "low" also reduces how much of the
+      // budget reasoning eats into for a short, conversational reply like this.
+      max_completion_tokens: 600,
+      reasoning_effort: "low",
       messages,
     });
 
-    const reply = completion.choices[0]?.message?.content ?? "";
+    const choice = completion.choices[0];
+    const responseText = choice?.message?.content ?? "";
+    const finishReason = choice?.finish_reason;
+    const reasoningTokens = completion.usage?.completion_tokens_details?.reasoning_tokens;
 
-    res.status(200).json({ reply });
+    // Server-side diagnostic log — status/shape info only, never the API key
+    // or the full completion object (which could include request echoes).
+    console.log("api/chat: OpenAI response", {
+      status: 200,
+      finishReason,
+      reasoningTokens,
+      replyLength: responseText.length,
+    });
+
+    if (!responseText.trim()) {
+      // The call succeeded (no exception), but produced no visible text —
+      // most likely the reasoning-token-budget issue described above.
+      // Treat this as a failure rather than returning an empty 200.
+      console.error("api/chat: OpenAI returned empty content", { finishReason, reasoningTokens });
+      res.status(500).json({ error: "OpenAI returned an empty response." });
+      return;
+    }
+
+    res.status(200).json({ reply: responseText, source: "openai" });
   } catch (err) {
-    console.error("api/chat error:", err);
+    // Log a safe subset only — err.message and err.status, never the raw
+    // error object (which can embed request headers/config) and never the key.
+    const safeMessage = err instanceof Error ? err.message : "Unknown error";
+    const status = (err as { status?: number })?.status;
+    console.error("api/chat: OpenAI request failed", { status, message: safeMessage });
     res.status(500).json({ error: "Something went wrong reaching the companion." });
   }
 }
