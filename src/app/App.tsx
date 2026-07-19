@@ -2170,7 +2170,7 @@ function explainTrend(): string {
 // everything else falls back to the general reply pool.
 // Used as an offline fallback when the real /api/chat call fails or isn't
 // available (e.g. running `vite dev` locally without `vercel dev`, or no
-// ANTHROPIC_API_KEY configured yet) — so chat still works either way.
+// OPENAI_API_KEY configured yet) — so chat still works either way.
 function pickReply(text: string): string {
   const t = text.toLowerCase();
   if (t.includes("trend") || t.includes("pattern")) return explainTrend();
@@ -2210,9 +2210,9 @@ function ChatScreen({ pet, petName, userName, onBack, initialPrompt, onConsumeIn
     setShowPrompts(false);
     setTyping(true);
 
-    // Try the real companion (Claude Haiku 4.5, via the /api/chat serverless
+    // Try the real companion (OpenAI GPT-5 Nano, via the /api/chat serverless
     // function on Vercel) first. If it's unavailable — running `vite dev`
-    // locally without `vercel dev`, no ANTHROPIC_API_KEY set yet, or a network
+    // locally without `vercel dev`, no OPENAI_API_KEY set yet, or a network
     // hiccup — fall back to the scripted reply so chat never breaks.
     fetch("/api/chat", {
       method: "POST",

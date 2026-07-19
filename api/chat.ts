@@ -1,21 +1,21 @@
-// Vercel serverless function — proxies chat messages to Claude Haiku 4.5.
+// Vercel serverless function — proxies chat messages to OpenAI GPT-5 Nano.
 //
 // Why this file exists: the Tend frontend is a static Vite/React app with no
-// backend of its own, so it cannot safely hold an Anthropic API key (anything
-// shipped to the browser can be read by anyone). This function runs only on
-// Vercel's server, reads the key from an environment variable, and is the one
-// place that talks to the real Anthropic API. The frontend calls POST /api/chat
-// and never sees the key.
+// backend of its own, so it cannot safely hold an API key (anything shipped
+// to the browser can be read by anyone). This function runs only on Vercel's
+// server, reads the key from an environment variable, and is the one place
+// that talks to the real OpenAI API. The frontend calls POST /api/chat and
+// never sees the key.
 //
 // Setup:
-//   1. npm install (pulls in @anthropic-ai/sdk, added to package.json)
+//   1. npm install (pulls in the `openai` package, added to package.json)
 //   2. In the Vercel project settings, add an environment variable named
-//      ANTHROPIC_API_KEY with your key from the Anthropic console.
+//      OPENAI_API_KEY with your key from platform.openai.com.
 //   3. Deploy. Vercel automatically turns every file under /api into an
 //      endpoint at the matching path — no extra config needed for a Vite app.
-import Anthropic from "@anthropic-ai/sdk";
+import OpenAI from "openai";
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 const SYSTEM_PROMPT = `You are the voice of a gentle companion pet inside "Tend", a prototype app that helps someone living with type 1 diabetes reflect on their day.
 
@@ -33,8 +33,8 @@ export default async function handler(req: any, res: any) {
     return;
   }
 
-  if (!process.env.ANTHROPIC_API_KEY) {
-    res.status(500).json({ error: "ANTHROPIC_API_KEY is not configured on the server." });
+  if (!process.env.OPENAI_API_KEY) {
+    res.status(500).json({ error: "OPENAI_API_KEY is not configured on the server." });
     return;
   }
 
@@ -47,9 +47,14 @@ export default async function handler(req: any, res: any) {
       return;
     }
 
+    const system = context
+      ? `${SYSTEM_PROMPT}\n\nContext about the user's (simulated) recent data, for reference only:\n${context}`
+      : SYSTEM_PROMPT;
+
     // Keep only the last few turns so requests stay small and cheap.
     const priorTurns = Array.isArray(history) ? history.slice(-10) : [];
     const messages = [
+      { role: "system" as const, content: system },
       ...priorTurns.map(m => ({
         role: (m.from === "user" ? "user" : "assistant") as "user" | "assistant",
         content: m.text,
@@ -57,19 +62,13 @@ export default async function handler(req: any, res: any) {
       { role: "user" as const, content: message },
     ];
 
-    const system = context
-      ? `${SYSTEM_PROMPT}\n\nContext about the user's (simulated) recent data, for reference only:\n${context}`
-      : SYSTEM_PROMPT;
-
-    const completion = await anthropic.messages.create({
-      model: "claude-haiku-4-5-20251001",
-      max_tokens: 300,
-      system,
+    const completion = await openai.chat.completions.create({
+      model: "gpt-5-nano",
+      max_completion_tokens: 300,
       messages,
     });
 
-    const textBlock = completion.content.find(block => block.type === "text");
-    const reply = textBlock && "text" in textBlock ? textBlock.text : "";
+    const reply = completion.choices[0]?.message?.content ?? "";
 
     res.status(200).json({ reply });
   } catch (err) {
