@@ -623,15 +623,12 @@ function HomeScreen({ pet, petName, stamps, numbersVisible, equippedClothing, on
   return (
     <div style={{ height: "100%", background: BG, display: "flex", flexDirection: "column", overflow: "hidden" }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "62px 18px 8px", flexShrink: 0 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <button onClick={onMenu} style={{ background: "none", border: "none", cursor: "pointer", display: "flex", flexDirection: "column", gap: 4.5, padding: "2px 0" }}>
+        <button onClick={onMenu} style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", gap: 10, padding: "2px 0" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 4.5 }}>
             {[0,1,2].map(i => <div key={i} style={{ width: 22, height: 2.5, background: TXT, borderRadius: 2 }} />)}
-          </button>
-          <div>
-            <div style={{ fontSize: 20, fontWeight: 900, color: TXT, fontFamily: FF, lineHeight: 1.1 }}>Tend</div>
-            <div style={{ fontSize: 10, color: MUTED, fontFamily: FF, fontWeight: 600 }}>Your glucose, gently understood.</div>
           </div>
-        </div>
+          <span style={{ fontSize: 15, fontWeight: 800, color: TXT, fontFamily: FF }}>Menu</span>
+        </button>
         <div style={{ display: "flex", alignItems: "center", gap: 5, background: CARD, borderRadius: 22, padding: "6px 11px 6px 8px", boxShadow: "0 2px 8px rgba(0,0,0,0.09)", border: `1px solid ${BORDER}` }}>
           <div style={{ width: 22, height: 22 }}><ImageWithFallback src={pawStampIcon} alt="stamps" style={{ width: "100%", height: "100%", objectFit: "contain" }} /></div>
           <span style={{ fontSize: 14, fontWeight: 900, color: TXT, fontFamily: FF }}>{stamps}</span>
@@ -639,30 +636,39 @@ function HomeScreen({ pet, petName, stamps, numbersVisible, equippedClothing, on
         </div>
       </div>
 
-      <div style={{ position: "relative", margin: "0 14px 8px", background: cardBg, borderRadius: 18, padding: "9px 14px 9px 18px", border: `1.5px solid ${BORDER}`, boxShadow: "0 2px 10px rgba(0,0,0,0.06)", flexShrink: 0, overflow: "hidden" }}>
+      <div style={{ position: "relative", margin: "0 14px 8px", background: cardBg, borderRadius: 16, border: `1.5px solid ${BORDER}`, boxShadow: "0 2px 10px rgba(0,0,0,0.06)", flexShrink: 0, overflow: "hidden" }}>
         <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, width: 5, background: dotColor }} />
-        <div style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
-          <div style={{ width: 30, height: 30, borderRadius: "50%", background: dotColor + "26", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 1 }}>
-            <div style={{ width: 11, height: 11, borderRadius: "50%", background: dotColor }} />
+
+        {/* Row 1: status dot · value · lightweight trend arrow */}
+        <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "11px 14px 0 16px" }}>
+          <div style={{ width: 24, height: 24, borderRadius: "50%", background: dotColor + "26", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+            <div style={{ width: 9, height: 9, borderRadius: "50%", background: dotColor }} />
           </div>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-              {numbersVisible ? (
-                <>
-                  <span style={{ fontSize: 26, fontWeight: 900, color: valueColor, fontFamily: FF, lineHeight: 1 }}>{glucoseVal}</span>
-                  <span style={{ fontSize: 12, color: MUTED, fontWeight: 600 }}>mmol/L</span>
-                </>
-              ) : (
-                <div style={{ width: 46, height: 22, borderRadius: 8, background: dotColor, boxShadow: `0 0 0 4px ${dotColor}22` }} />
-              )}
-            </div>
-            <div style={{ fontSize: 11.5, fontWeight: 700, color: trendColor, marginTop: 2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{"↗ Rising gently"}</div>
-            <div style={{ fontSize: 10.5, color: trendColor, opacity: 0.85, marginTop: 1, fontFamily: FF, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{"In range · likely to stay steady"}</div>
+          {numbersVisible ? (
+            <>
+              <span style={{ fontSize: 24, fontWeight: 900, color: valueColor, fontFamily: FF, lineHeight: 1 }}>{glucoseVal}</span>
+              <span style={{ fontSize: 11.5, color: MUTED, fontWeight: 600 }}>mmol/L</span>
+            </>
+          ) : (
+            <div style={{ width: 44, height: 20, borderRadius: 8, background: dotColor, boxShadow: `0 0 0 4px ${dotColor}22` }} />
+          )}
+          <div style={{ flex: 1 }} />
+          <div style={{ width: 17, height: 17, flexShrink: 0 }}>
+            <ImageWithFallback src={trendArrowIcon} alt="Rising" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
           </div>
-          <button onClick={onTrend} style={{ display: "flex", alignItems: "center", gap: 3, background: "#FDFAF3", border: `1px solid ${dotColor}33`, borderRadius: 10, padding: "5px 11px", cursor: "pointer", fontFamily: FF, fontWeight: 800, fontSize: 11.5, color: TXT, flexShrink: 0, marginTop: 11 }}>
-            View trend <ChevronLeft size={12} color={TXT} style={{ transform: "rotate(180deg)" }} />
-          </button>
         </div>
+
+        {/* Row 2: trend label (primary) + range description (secondary) */}
+        <div style={{ padding: "5px 14px 11px 16px" }}>
+          <div style={{ fontSize: 12.5, fontWeight: 800, color: trendColor, marginLeft: 32, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>Rising gently</div>
+          <div style={{ fontSize: 10.5, fontWeight: 500, color: MUTED, marginTop: 1, marginLeft: 32, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>In range · likely to stay steady</div>
+        </div>
+
+        {/* Footer: near-full-width "View trend" row */}
+        <button onClick={onTrend} style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(255,255,255,0.45)", borderTop: `1px solid ${dotColor}26`, borderLeft: "none", borderRight: "none", borderBottom: "none", padding: "10px 16px", cursor: "pointer", fontFamily: FF }}>
+          <span style={{ fontSize: 12.5, fontWeight: 800, color: TXT }}>View trend</span>
+          <ChevronLeft size={13} color={TXT} style={{ transform: "rotate(180deg)" }} />
+        </button>
       </div>
 
       <div style={{ flex: 1, position: "relative", margin: "0 6px", borderRadius: 22, overflow: "hidden", background: "#EDE8DE", minHeight: 0 }}>
