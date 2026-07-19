@@ -637,34 +637,30 @@ function HomeScreen({ pet, petName, stamps, numbersVisible, equippedClothing, on
         </div>
       </div>
 
-      <div style={{ position: "relative", margin: "0 14px 14px", background: cardBg, borderRadius: 16, border: `1.5px solid ${BORDER}`, boxShadow: "0 2px 10px rgba(0,0,0,0.06)", flexShrink: 0, overflow: "hidden", padding: "10px 14px 9px 16px" }}>
+      <div style={{ position: "relative", margin: "0 14px 14px", background: cardBg, borderRadius: 16, border: `1.5px solid ${BORDER}`, boxShadow: "0 2px 10px rgba(0,0,0,0.06)", flexShrink: 0, overflow: "hidden", padding: "12px 14px 10px 16px" }}>
         <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, width: 5, background: dotColor }} />
 
-        {/* Row 1: status dot · value · lightweight trend arrow */}
-        <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+        {/* Row 1: the headline — status dot, glucose value, and trend arrow grouped tightly together as the card's main focal point */}
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <div style={{ width: 20, height: 20, borderRadius: "50%", background: dotColor + "26", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
             <div style={{ width: 8, height: 8, borderRadius: "50%", background: dotColor }} />
           </div>
           {numbersVisible ? (
             <>
-              <span style={{ fontSize: 22, fontWeight: 900, color: valueColor, fontFamily: FF, lineHeight: 1 }}>{glucoseVal}</span>
-              <span style={{ fontSize: 11, color: MUTED, fontWeight: 600 }}>mmol/L</span>
+              <span style={{ fontSize: 27, fontWeight: 900, color: valueColor, fontFamily: FF, lineHeight: 1 }}>{glucoseVal}</span>
+              <span style={{ fontSize: 11, color: MUTED, fontWeight: 600, marginRight: 2 }}>mmol/L</span>
             </>
           ) : (
             <div style={{ width: 40, height: 18, borderRadius: 7, background: dotColor, boxShadow: `0 0 0 4px ${dotColor}22` }} />
           )}
-          <div style={{ flex: 1 }} />
-          <div style={{ width: 21, height: 21, flexShrink: 0, filter: "brightness(0.82) saturate(1.15)" }}>
+          <div style={{ width: 25, height: 25, flexShrink: 0, filter: "brightness(0.82) saturate(1.15)" }}>
             <ImageWithFallback src={trendUpIconBold} alt="Rising" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
           </div>
         </div>
 
-        {/* Row 2: trend label (primary) */}
-        <div style={{ fontSize: 12, fontWeight: 800, color: trendColor, marginTop: 4, marginLeft: 27, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>Rising gently</div>
-
-        {/* Row 3: range description (secondary, left) + lightweight "View trend" text entry (right) */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, marginTop: 3, marginLeft: 27 }}>
-          <span style={{ fontSize: 10, fontWeight: 500, color: MUTED, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>In range</span>
+        {/* Row 2: trend + range status (left, secondary) · View trend entry (right) */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, marginTop: 6, marginLeft: 28 }}>
+          <span style={{ fontSize: 11, fontWeight: 700, color: trendColor, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>Rising gently · In range</span>
           <button onClick={onTrend} style={{ display: "flex", alignItems: "center", gap: 2, background: "none", border: "none", padding: "6px 2px", margin: "-6px -2px", cursor: "pointer", fontFamily: FF, flexShrink: 0 }}>
             <span style={{ fontSize: 11, fontWeight: 800, color: TXT }}>View trend</span>
             <ChevronLeft size={11} color={TXT} style={{ transform: "rotate(180deg)" }} />
