@@ -135,6 +135,7 @@ import clothingBellCollar from "@/imports/rqvkwctCMctYfqeDYX4Ug.png";
 import clothingPearlNecklace from "@/imports/TItJfAkaPEfgL8xVX6gXu.png";
 import clothingFlowerCrown from "@/imports/tN4a8gpKgHpb0RvwT-Yfw.png";
 import trendArrowIcon from "@/imports/BVwVQz4niJ5GN5qblqQrl.png";
+import trendUpIconBold from "@/imports/vpFzryz51BYV_fS1mVo2I.png";
 // ── Gym room assets (Document Figma) ─────────────────────────────────
 import docGymIcon      from "@/imports/Document/cc64bd176408bec084b4659295c112893ff5c8f4.png";
 import docGymBoard     from "@/imports/Document/e58d9116dd046dfecb5aa75bd38e8ee6ec297d83.png";
@@ -653,17 +654,17 @@ function HomeScreen({ pet, petName, stamps, numbersVisible, equippedClothing, on
             <div style={{ width: 40, height: 18, borderRadius: 7, background: dotColor, boxShadow: `0 0 0 4px ${dotColor}22` }} />
           )}
           <div style={{ flex: 1 }} />
-          <div style={{ width: 15, height: 15, flexShrink: 0 }}>
-            <ImageWithFallback src={trendArrowIcon} alt="Rising" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+          <div style={{ width: 21, height: 21, flexShrink: 0, filter: "brightness(0.82) saturate(1.15)" }}>
+            <ImageWithFallback src={trendUpIconBold} alt="Rising" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
           </div>
         </div>
 
         {/* Row 2: trend label (primary) */}
-        <div style={{ fontSize: 12, fontWeight: 800, color: trendColor, marginTop: 3, marginLeft: 27, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>Rising gently</div>
+        <div style={{ fontSize: 12, fontWeight: 800, color: trendColor, marginTop: 4, marginLeft: 27, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>Rising gently</div>
 
         {/* Row 3: range description (secondary, left) + lightweight "View trend" text entry (right) */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, marginTop: 2, marginLeft: 27 }}>
-          <span style={{ fontSize: 10, fontWeight: 500, color: MUTED, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>In range · likely to stay steady</span>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, marginTop: 3, marginLeft: 27 }}>
+          <span style={{ fontSize: 10, fontWeight: 500, color: MUTED, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>In range</span>
           <button onClick={onTrend} style={{ display: "flex", alignItems: "center", gap: 2, background: "none", border: "none", padding: "6px 2px", margin: "-6px -2px", cursor: "pointer", fontFamily: FF, flexShrink: 0 }}>
             <span style={{ fontSize: 11, fontWeight: 800, color: TXT }}>View trend</span>
             <ChevronLeft size={11} color={TXT} style={{ transform: "rotate(180deg)" }} />
