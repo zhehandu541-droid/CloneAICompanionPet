@@ -636,39 +636,39 @@ function HomeScreen({ pet, petName, stamps, numbersVisible, equippedClothing, on
         </div>
       </div>
 
-      <div style={{ position: "relative", margin: "0 14px 8px", background: cardBg, borderRadius: 16, border: `1.5px solid ${BORDER}`, boxShadow: "0 2px 10px rgba(0,0,0,0.06)", flexShrink: 0, overflow: "hidden" }}>
+      <div style={{ position: "relative", margin: "0 14px 14px", background: cardBg, borderRadius: 16, border: `1.5px solid ${BORDER}`, boxShadow: "0 2px 10px rgba(0,0,0,0.06)", flexShrink: 0, overflow: "hidden", padding: "10px 14px 9px 16px" }}>
         <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, width: 5, background: dotColor }} />
 
         {/* Row 1: status dot · value · lightweight trend arrow */}
-        <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "11px 14px 0 16px" }}>
-          <div style={{ width: 24, height: 24, borderRadius: "50%", background: dotColor + "26", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-            <div style={{ width: 9, height: 9, borderRadius: "50%", background: dotColor }} />
+        <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+          <div style={{ width: 20, height: 20, borderRadius: "50%", background: dotColor + "26", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+            <div style={{ width: 8, height: 8, borderRadius: "50%", background: dotColor }} />
           </div>
           {numbersVisible ? (
             <>
-              <span style={{ fontSize: 24, fontWeight: 900, color: valueColor, fontFamily: FF, lineHeight: 1 }}>{glucoseVal}</span>
-              <span style={{ fontSize: 11.5, color: MUTED, fontWeight: 600 }}>mmol/L</span>
+              <span style={{ fontSize: 22, fontWeight: 900, color: valueColor, fontFamily: FF, lineHeight: 1 }}>{glucoseVal}</span>
+              <span style={{ fontSize: 11, color: MUTED, fontWeight: 600 }}>mmol/L</span>
             </>
           ) : (
-            <div style={{ width: 44, height: 20, borderRadius: 8, background: dotColor, boxShadow: `0 0 0 4px ${dotColor}22` }} />
+            <div style={{ width: 40, height: 18, borderRadius: 7, background: dotColor, boxShadow: `0 0 0 4px ${dotColor}22` }} />
           )}
           <div style={{ flex: 1 }} />
-          <div style={{ width: 17, height: 17, flexShrink: 0 }}>
+          <div style={{ width: 15, height: 15, flexShrink: 0 }}>
             <ImageWithFallback src={trendArrowIcon} alt="Rising" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
           </div>
         </div>
 
-        {/* Row 2: trend label (primary) + range description (secondary) */}
-        <div style={{ padding: "5px 14px 11px 16px" }}>
-          <div style={{ fontSize: 12.5, fontWeight: 800, color: trendColor, marginLeft: 32, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>Rising gently</div>
-          <div style={{ fontSize: 10.5, fontWeight: 500, color: MUTED, marginTop: 1, marginLeft: 32, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>In range · likely to stay steady</div>
-        </div>
+        {/* Row 2: trend label (primary) */}
+        <div style={{ fontSize: 12, fontWeight: 800, color: trendColor, marginTop: 3, marginLeft: 27, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>Rising gently</div>
 
-        {/* Footer: near-full-width "View trend" row */}
-        <button onClick={onTrend} style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(255,255,255,0.45)", borderTop: `1px solid ${dotColor}26`, borderLeft: "none", borderRight: "none", borderBottom: "none", padding: "10px 16px", cursor: "pointer", fontFamily: FF }}>
-          <span style={{ fontSize: 12.5, fontWeight: 800, color: TXT }}>View trend</span>
-          <ChevronLeft size={13} color={TXT} style={{ transform: "rotate(180deg)" }} />
-        </button>
+        {/* Row 3: range description (secondary, left) + lightweight "View trend" text entry (right) */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, marginTop: 2, marginLeft: 27 }}>
+          <span style={{ fontSize: 10, fontWeight: 500, color: MUTED, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>In range · likely to stay steady</span>
+          <button onClick={onTrend} style={{ display: "flex", alignItems: "center", gap: 2, background: "none", border: "none", padding: "6px 2px", margin: "-6px -2px", cursor: "pointer", fontFamily: FF, flexShrink: 0 }}>
+            <span style={{ fontSize: 11, fontWeight: 800, color: TXT }}>View trend</span>
+            <ChevronLeft size={11} color={TXT} style={{ transform: "rotate(180deg)" }} />
+          </button>
+        </div>
       </div>
 
       <div style={{ flex: 1, position: "relative", margin: "0 6px", borderRadius: 22, overflow: "hidden", background: "#EDE8DE", minHeight: 0 }}>
