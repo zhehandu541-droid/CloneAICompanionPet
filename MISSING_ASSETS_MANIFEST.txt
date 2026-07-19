@@ -1,0 +1,129 @@
+CloneAICompanionPet-main — 缺失图片素材清单(共 96 张)
+每一行是:项目里代码引用的文件名/路径  →  用途说明
+
+放置位置说明:
+- 没有子路径前缀的文件,放到:  src/imports/文件名.png
+- 前缀是 Document/ 的,放到:   src/imports/Document/文件名.png
+- 前缀是 PhoneShell-2/ 的,放到: src/imports/PhoneShell-2/文件名.png
+- 前缀是 PhoneShell-3/ 的,放到: src/imports/PhoneShell-3/文件名.png
+文件名必须一模一样(区分大小写),这样代码不用改就能直接读到真图。
+
+────────────────────────────────────────
+【宠物立绘】
+_4OjUQ2qMqEE2AizF2A5L.png            红熊猫(咖啡)— redPandaCoffee
+35xWmsUNmiQ9DwD6-TS9_.png            焦糖猫 — catCaramel
+a_AdKu89fQNnt_tZd2dAH.png            蓬松狗 — fluffyDog
+De7FYYD8GZvjeehwo51Lm.png            狐狸 — fox
+dWJKUxbXZ86ZlO9Iq8V_R.png            刺猬 — hedgehog
+eZfZL4cZcsvOLvH-m82sj.png            兔子 — bunny
+IofGdcbjtHozWERe-nYEf.png            企鹅 — penguin
+kJ9PUl8X3-hLAVs40UQdG.png            金毛寻回犬 — goldenRetriever
+kro8cx2qzYM32Cg8SLOZ4.png            熊 — bear
+PmsGMjxO1a3xrEleihhbW.png            蓬松猫 — fluffyCat
+Vs20OxD5SCDwZ25ztpfUr.png            金毛狗(另一款) — goldenDog
+VjDkYTZBVgSInK1KMxszi.png            柯利牧羊犬(目前代码未使用) — collie
+
+【首页/世界地图背景】
+xie3xR5ZNm3ImSSbLXJrA-1.png          家 — 房屋背景图 — houseBgImg
+ofrSzK3BDwfibZ1PCoXt2.png            世界地图 — worldMapImg
+
+【明信片场景图】
+__2026-07-14_16.14.13.png            海滩明信片 — postcardBeach
+__2026-07-14_16.14.06.png            草地明信片 — postcardMeadow
+__2026-07-14_16.31.00.png            森林明信片 — postcardForest
+__2026-07-14_16.31.17.png            教堂明信片 — postcardChurch
+
+【卧室场景素材(旧版,部分未使用)】
+__2026-07-14_16.19.17.png            床 — bedroomBed
+__2026-07-14_16.19.10.png            床头柜 — bedroomNightstand
+__2026-07-14_16.19.26.png            圆桌 — bedroomRoundTable
+d92596e2-936d-4195-98b8-b9727db5ab72.png   床头柜替换图 — bedroomNightstandCutout
+bf9f77e3-7807-411d-a837-954a2056c0d8.png   梳妆台 — bedroomVanity
+
+【卧室场景素材(实际使用 · PhoneShell-2)】
+PhoneShell-2/e3e04f8f39ea60b72d421465f504c8da607a7565.png  床 — ps2Bed
+PhoneShell-2/feee5112f01dd8b05c3261c99982bce8d9720ff4.png  衣柜 — ps2Wardrobe
+PhoneShell-2/0b7e1a8bbd05a977f4192e4793ed94f25db662c5.png  花 — ps2Flowers
+PhoneShell-2/90667ffcfdfebed1058f58e32c6f587efd29e3e5.png  气球(明信片入口)— ps2Balloon
+PhoneShell-2/1640aa871e1776c49d8c53a4a622b5af81f4a94f.png  桌子 — ps2Table
+PhoneShell-2/55045d7036b5d362211a41a7a48f5f260c12f31d.png  日记本 — ps2JournalBook
+
+【厨房场景素材 · PhoneShell-3】
+PhoneShell-3/3cb948f1213e956ba32bf4ececfbd3541a24bf08.png  窗户 — kitchenWindow
+PhoneShell-3/df0c972304727053f2ec9b2f7d552690109d7fdc.png  水槽 — kitchenSink
+PhoneShell-3/96c1d0ac96479420a9e52e761403c777dad1e851.png  炉灶 — kitchenStove
+PhoneShell-3/2dfa2ba61469cd15e7b865fc71cb2b8eafe02f4f.png  餐桌 — kitchenTable
+PhoneShell-3/e7570e02db179d3d873471f16019788c1760a2e8.png  菜篮 — kitchenBasket
+PhoneShell-3/c3d023433712c0f31dfb614313aa22bbedcda16c.png  汉堡(小图标) — kitchenBurger
+PhoneShell-3/a85220379f09fd3800d29f7cec2ab869b4c58214.png  厨房图标 — kitchenIcon
+
+【健身房场景素材 · Document】
+Document/cc64bd176408bec084b4659295c112893ff5c8f4.png  健身房图标 — docGymIcon
+Document/e58d9116dd046dfecb5aa75bd38e8ee6ec297d83.png  打卡板 — docGymBoard
+Document/26dfeb3c3557424db00c84fa4944c76619266f78.png  哑铃架 — docGymRack
+Document/7713c971b02cf27d34d78c923dad47d8dc63dee7.png  跑步机 — docGymTreadmill
+Document/fbf7952617afb64621cd9611c5aa1affdf33b0e5.png  水壶 — docGymBottle
+Document/56b37bace9069c6b5f090585da6dcdeabe3fa38e.png  墙贴 — docGymSticker
+Document/2e2062dbc0a72e503ece6da41555b0b2d1760af0.png  瑜伽垫 — docGymYogaMat
+
+【Kawaii UI 图标】
+__2026-07-11_18.25.41.png            床图标 — bedIcon
+__2026-07-11_18.25.15.png            餐厅图标 — diningIcon
+uI2pD3RrCUu9-VMKflHcy.png            记事本图标 — strawbookIcon
+__2026-07-11_18.25.55.png            齿轮(设置)图标 — gearIcon
+5XQcXb7oCcR5FFbTXQQyq-1.png          新奖励图标(目前未使用) — newRewardIcon
+__2026-07-10_21.14.48.png            书本图标 — bookIcon
+1yoRVOUwrDPP4JUU2_poy.png            相框图标(目前未使用) — frameIcon
+5XQcXb7oCcR5FFbTXQQyq.png            衣柜图标(目前未使用) — wardrobeIcon
+-CeJICC-m5LXlOYU97T85.png            爪印邮票图标 — pawStampIcon
+__2026-07-14_16.20.27-1.png          气球图标 — balloonIcon
+__2026-07-11_18.26.06-1.png          礼盒图标 — giftBoxIcon
+BVwVQz4niJ5GN5qblqQrl.png            趋势箭头图标 — trendArrowIcon
+
+【商店 · 家具类】
+Gr-5m5wXMOssl9FyVcgO7.png            迷你冰箱 — storeMiniFridge
+__2026-07-15_00.13.01.png            餐桌 — storeDiningTable
+__2026-07-15_00.13.21.png            猫窝 — storeCatBasket
+__2026-07-15_00.13.39.png            蛋糕桌 — storeCakeTable
+__2026-07-15_00.13.53.png            早餐桌 — storeBreakfastTable
+__2026-07-15_00.14.13.png            烛台 — storeCandelabra
+__2026-07-15_00.14.29.png            暖窗 — storeWarmWindow
+__2026-07-15_00.14.45.png            花瓶 — storeFlowerVase
+__2026-07-15_00.14.57.png            边柜 — storeCabinet
+__2026-07-15_00.15.10.png            相框 — storePhotoFrame
+aUSxgjATqqxZXZm4Fd0qJ-1.png          厨房水槽柜 — storeKitchenSinkUnit
+__2026-07-15_00.15.28-1.png          座钟 — storePendulumClock
+__2026-07-14_16.20.03-2.png          梳妆台 — storeVanityTable
+__2026-07-14_16.19.10-2.png          床头抽屉柜 — storeBedsideDrawers
+__2026-07-14_16.20.39-2.png          电视柜 — storeTVStand
+
+【商店 · 服饰类】
+1IXsWQXhpzFHEaMx9U3nJ.png            草帽 — clothingStrawHat
+OZZ8iqNqq2hd1_CZg4qIZ.png            贝雷帽 — clothingBeret
+l5g0VscFHswqKCZhd_WD0.png            渔夫帽 — clothingBucketHat
+7b9i86X29EjqPf5H04N9l.png            星星眼镜 — clothingStarGlasses
+SCHujXIBNiiocxSHE4aw3.png            绿色蝴蝶结 — clothingGreenBow
+mq86i7IAxGh3hIAmExGZE.png            粉色蝴蝶结 — clothingPinkBow
+y0QENmMxCnTvDiHc161UG.png            墨镜 — clothingSunglasses
+Vw3ahjSPSVKPZo1gfbsdC.png            格纹蝴蝶结 — clothingPlaidBow
+Yt5hrqMWa-kfUXVA7_Cms.png            帆布包 — clothingCanvasBag
+y0J9fHTdqD2yMQcdZBrrG.png            雨披 — clothingRainCape
+STkePI9KwmDi5_xDfIfT4.png            双肩包 — clothingBackpack
+uqDVHdfimRVBV1N9_lhPJ.png            邮差包 — clothingMessengerBag
+ckh3GH4lSQ8NwXrTstGTI.png            奶油色斗篷 — clothingPoncho
+ER1i1bN_uTFrwcW2dmrwk.png            星星头巾 — clothingStarBandana
+gpg2HmhiUsxywJBGbUXu0.png            爪印项圈 — clothingPawCollar
+rqvkwctCMctYfqeDYX4Ug.png            铃铛项圈 — clothingBellCollar
+TItJfAkaPEfgL8xVX6gXu.png            珍珠项链 — clothingPearlNecklace
+tN4a8gpKgHpb0RvwT-Yfw.png            花冠 — clothingFlowerCrown
+
+【食物 & 活动图标】
+aqBCeLdGIP26RIoYAY3fk.png            汉堡 — burgerIcon
+__2026-07-11_19.27.32.png            蛋糕 — cakeImg
+__2026-07-11_19.27.38.png            拉面 — noodlesImg
+__2026-07-11_19.27.44.png            咖喱饭 — curryImg
+__2026-07-11_19.28.01.png            抹茶软冰淇淋 — matchaImg
+__2026-07-11_19.28.07.png            蟹肉盘 — crabImg
+__2026-07-11_19.28.16.png            披萨 — pizzaImg
+xhmEedfEbOaH_s2AvmIvC.png            跑步的狗(活动页配图) — runDogImg
+────────────────────────────────────────
