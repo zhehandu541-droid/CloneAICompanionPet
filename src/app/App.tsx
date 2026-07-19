@@ -136,6 +136,7 @@ import clothingPearlNecklace from "@/imports/TItJfAkaPEfgL8xVX6gXu.png";
 import clothingFlowerCrown from "@/imports/tN4a8gpKgHpb0RvwT-Yfw.png";
 import trendArrowIcon from "@/imports/BVwVQz4niJ5GN5qblqQrl.png";
 import trendUpIconBold from "@/imports/vpFzryz51BYV_fS1mVo2I.png";
+import trendZigzagIcon from "@/imports/eQ0LqVOKYoE5WXq15LrVp.png";
 // ── Gym room assets (Document Figma) ─────────────────────────────────
 import docGymIcon      from "@/imports/Document/cc64bd176408bec084b4659295c112893ff5c8f4.png";
 import docGymBoard     from "@/imports/Document/e58d9116dd046dfecb5aa75bd38e8ee6ec297d83.png";
@@ -637,37 +638,32 @@ function HomeScreen({ pet, petName, stamps, numbersVisible, equippedClothing, on
         </div>
       </div>
 
-      <div style={{ position: "relative", margin: "0 14px 14px", background: cardBg, borderRadius: 18, border: `1.5px solid ${BORDER}`, boxShadow: "0 2px 10px rgba(0,0,0,0.06)", flexShrink: 0, overflow: "hidden", padding: "16px 18px 14px" }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-          {/* Left: value, trend label, range status — stacked */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 3, minWidth: 0 }}>
+      <div style={{ position: "relative", margin: "0 14px 12px", background: cardBg, borderRadius: 16, border: `1.5px solid ${BORDER}`, boxShadow: "0 2px 10px rgba(0,0,0,0.06)", flexShrink: 0, overflow: "hidden", padding: "11px 14px 10px" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+          {/* Left: value, trend label, range status — stacked, tight */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 1, minWidth: 0 }}>
             {numbersVisible ? (
-              <div style={{ display: "flex", alignItems: "baseline", gap: 5 }}>
-                <span style={{ fontSize: 32, fontWeight: 900, color: valueColor, fontFamily: FF, lineHeight: 1 }}>{glucoseVal}</span>
-                <span style={{ fontSize: 13, color: MUTED, fontWeight: 600 }}>mmol/L</span>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
+                <span style={{ fontSize: 34, fontWeight: 900, color: valueColor, fontFamily: FF, lineHeight: 1 }}>{glucoseVal}</span>
+                <span style={{ fontSize: 12, color: MUTED, fontWeight: 600 }}>mmol/L</span>
               </div>
             ) : (
               <div style={{ width: 44, height: 20, borderRadius: 8, background: dotColor, boxShadow: `0 0 0 4px ${dotColor}22` }} />
             )}
-            <div style={{ fontSize: 14, fontWeight: 800, color: trendColor, display: "flex", alignItems: "center", gap: 4 }}>
-              Rising gently <span style={{ fontSize: 13 }}>↗</span>
+            <div style={{ fontSize: 13, fontWeight: 800, color: trendColor, display: "flex", alignItems: "center", gap: 3, marginTop: 2 }}>
+              Rising gently <span style={{ fontSize: 12 }}>↗</span>
             </div>
-            <div style={{ fontSize: 11, fontWeight: 500, color: MUTED, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>In range · looking stable</div>
+            <div style={{ fontSize: 10.5, fontWeight: 500, color: MUTED, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>In range · looking stable</div>
           </div>
 
-          {/* Right: big trend icon with a small sparkle accent, "View trend" link below */}
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, flexShrink: 0 }}>
-            <div style={{ position: "relative", width: 54, height: 54 }}>
-              <div style={{ width: "100%", height: "100%", filter: "brightness(0.82) saturate(1.15)" }}>
-                <ImageWithFallback src={trendUpIconBold} alt="Rising" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
-              </div>
-              {[[-2, 14, -18], [10, 2, 18], [4, -10, -32]].map(([top, right, rot], i) => (
-                <div key={i} style={{ position: "absolute", top, right, width: 8, height: 2, borderRadius: 1, background: dotColor, opacity: 0.55, transform: `rotate(${rot}deg)` }} />
-              ))}
+          {/* Right: big trend icon, "View trend" link tucked close beneath it */}
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1, flexShrink: 0 }}>
+            <div style={{ width: 58, height: 58, filter: "brightness(0.82) saturate(1.15)" }}>
+              <ImageWithFallback src={trendZigzagIcon} alt="Rising" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
             </div>
-            <button onClick={onTrend} style={{ display: "flex", alignItems: "center", gap: 2, background: "none", border: "none", padding: "4px 2px", cursor: "pointer", fontFamily: FF, flexShrink: 0 }}>
-              <span style={{ fontSize: 12, fontWeight: 800, color: TXT }}>View trend</span>
-              <ChevronLeft size={12} color={TXT} style={{ transform: "rotate(180deg)" }} />
+            <button onClick={onTrend} style={{ display: "flex", alignItems: "center", gap: 2, background: "none", border: "none", padding: "2px", cursor: "pointer", fontFamily: FF, flexShrink: 0 }}>
+              <span style={{ fontSize: 11.5, fontWeight: 800, color: TXT }}>View trend</span>
+              <ChevronLeft size={11} color={TXT} style={{ transform: "rotate(180deg)" }} />
             </button>
           </div>
         </div>
