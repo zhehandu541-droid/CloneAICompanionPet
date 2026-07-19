@@ -135,8 +135,6 @@ import clothingBellCollar from "@/imports/rqvkwctCMctYfqeDYX4Ug.png";
 import clothingPearlNecklace from "@/imports/TItJfAkaPEfgL8xVX6gXu.png";
 import clothingFlowerCrown from "@/imports/tN4a8gpKgHpb0RvwT-Yfw.png";
 import trendArrowIcon from "@/imports/BVwVQz4niJ5GN5qblqQrl.png";
-import trendUpIconBold from "@/imports/vpFzryz51BYV_fS1mVo2I.png";
-import trendZigzagIcon from "@/imports/eQ0LqVOKYoE5WXq15LrVp.png";
 // ── Gym room assets (Document Figma) ─────────────────────────────────
 import docGymIcon      from "@/imports/Document/cc64bd176408bec084b4659295c112893ff5c8f4.png";
 import docGymBoard     from "@/imports/Document/e58d9116dd046dfecb5aa75bd38e8ee6ec297d83.png";
@@ -638,10 +636,10 @@ function HomeScreen({ pet, petName, stamps, numbersVisible, equippedClothing, on
         </div>
       </div>
 
-      <div style={{ position: "relative", margin: "0 14px 12px", background: cardBg, borderRadius: 16, border: `1.5px solid ${BORDER}`, boxShadow: "0 2px 10px rgba(0,0,0,0.06)", flexShrink: 0, overflow: "hidden", padding: "11px 14px 10px" }}>
+      <div style={{ position: "relative", margin: "0 14px 12px", background: cardBg, borderRadius: 16, border: `1.5px solid ${BORDER}`, boxShadow: "0 2px 10px rgba(0,0,0,0.06)", flexShrink: 0, overflow: "hidden", padding: "12px 14px 11px" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
-          {/* Left: value, trend label, range status — stacked, tight */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 1, minWidth: 0 }}>
+          {/* Left: value + range status — stacked, tight */}
+          <div style={{ display: "flex", flexDirection: "column", gap: 3, minWidth: 0 }}>
             {numbersVisible ? (
               <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
                 <span style={{ fontSize: 34, fontWeight: 900, color: valueColor, fontFamily: FF, lineHeight: 1 }}>{glucoseVal}</span>
@@ -650,34 +648,13 @@ function HomeScreen({ pet, petName, stamps, numbersVisible, equippedClothing, on
             ) : (
               <div style={{ width: 44, height: 20, borderRadius: 8, background: dotColor, boxShadow: `0 0 0 4px ${dotColor}22` }} />
             )}
-            <div style={{ fontSize: 13, fontWeight: 800, color: trendColor, display: "flex", alignItems: "center", gap: 3, marginTop: 2 }}>
-              Rising gently <span style={{ fontSize: 12 }}>↗</span>
-            </div>
             <div style={{ fontSize: 10.5, fontWeight: 500, color: MUTED, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>In range · looking stable</div>
           </div>
 
-          {/* Right: big trend icon with a sparkle burst near the tip, "View trend" link tucked beneath */}
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 2, flexShrink: 0 }}>
-            <div style={{ position: "relative", width: 78, height: 78 }}>
-              <div style={{ width: "100%", height: "100%", filter: "brightness(0.82) saturate(1.15)" }}>
-                <ImageWithFallback src={trendZigzagIcon} alt="Rising" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
-              </div>
-              {/* sparkle burst, fanned above the arrow tip */}
-              <div style={{ position: "absolute", top: -2, right: 6, width: 22, height: 22 }}>
-                {[
-                  { rot: 0,   len: 10, op: 0.9 },
-                  { rot: 32,  len: 7,  op: 0.55 },
-                  { rot: -32, len: 7,  op: 0.55 },
-                  { rot: 58,  len: 5,  op: 0.3 },
-                  { rot: -58, len: 5,  op: 0.3 },
-                ].map((s, i) => (
-                  <div key={i} style={{
-                    position: "absolute", left: "50%", top: "50%",
-                    width: 2, height: s.len, borderRadius: 1, background: dotColor, opacity: s.op,
-                    transform: `translate(-50%, -100%) rotate(${s.rot}deg)`, transformOrigin: "bottom center",
-                  }} />
-                ))}
-              </div>
+          {/* Right: "Rising gently" + arrow, enlarged, with "View trend" link beneath */}
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 5, flexShrink: 0 }}>
+            <div style={{ fontSize: 18, fontWeight: 900, color: trendColor, display: "flex", alignItems: "center", gap: 4, whiteSpace: "nowrap" }}>
+              Rising gently <span style={{ fontSize: 18 }}>↗</span>
             </div>
             <button onClick={onTrend} style={{ display: "flex", alignItems: "center", gap: 2, background: "none", border: "none", padding: "2px", cursor: "pointer", fontFamily: FF, flexShrink: 0 }}>
               <span style={{ fontSize: 11.5, fontWeight: 800, color: TXT }}>View trend</span>
