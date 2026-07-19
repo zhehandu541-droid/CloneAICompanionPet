@@ -656,10 +656,28 @@ function HomeScreen({ pet, petName, stamps, numbersVisible, equippedClothing, on
             <div style={{ fontSize: 10.5, fontWeight: 500, color: MUTED, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>In range · looking stable</div>
           </div>
 
-          {/* Right: big trend icon, "View trend" link tucked close beneath it */}
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1, flexShrink: 0 }}>
-            <div style={{ width: 58, height: 58, filter: "brightness(0.82) saturate(1.15)" }}>
-              <ImageWithFallback src={trendZigzagIcon} alt="Rising" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+          {/* Right: big trend icon with a sparkle burst near the tip, "View trend" link tucked beneath */}
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 2, flexShrink: 0 }}>
+            <div style={{ position: "relative", width: 78, height: 78 }}>
+              <div style={{ width: "100%", height: "100%", filter: "brightness(0.82) saturate(1.15)" }}>
+                <ImageWithFallback src={trendZigzagIcon} alt="Rising" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
+              </div>
+              {/* sparkle burst, fanned above the arrow tip */}
+              <div style={{ position: "absolute", top: -2, right: 6, width: 22, height: 22 }}>
+                {[
+                  { rot: 0,   len: 10, op: 0.9 },
+                  { rot: 32,  len: 7,  op: 0.55 },
+                  { rot: -32, len: 7,  op: 0.55 },
+                  { rot: 58,  len: 5,  op: 0.3 },
+                  { rot: -58, len: 5,  op: 0.3 },
+                ].map((s, i) => (
+                  <div key={i} style={{
+                    position: "absolute", left: "50%", top: "50%",
+                    width: 2, height: s.len, borderRadius: 1, background: dotColor, opacity: s.op,
+                    transform: `translate(-50%, -100%) rotate(${s.rot}deg)`, transformOrigin: "bottom center",
+                  }} />
+                ))}
+              </div>
             </div>
             <button onClick={onTrend} style={{ display: "flex", alignItems: "center", gap: 2, background: "none", border: "none", padding: "2px", cursor: "pointer", fontFamily: FF, flexShrink: 0 }}>
               <span style={{ fontSize: 11.5, fontWeight: 800, color: TXT }}>View trend</span>
