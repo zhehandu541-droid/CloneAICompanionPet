@@ -653,7 +653,7 @@ function HomeScreen({ pet, petName, stamps, numbersVisible, equippedClothing, on
 
           {/* Right: "Rising gently" + arrow, enlarged, with "View trend" link beneath */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 5, flexShrink: 0 }}>
-            <div style={{ fontSize: 18, fontWeight: 900, color: trendColor, display: "flex", alignItems: "center", gap: 4, whiteSpace: "nowrap" }}>
+            <div style={{ fontSize: 18, fontWeight: 900, color: valueColor, display: "flex", alignItems: "center", gap: 4, whiteSpace: "nowrap" }}>
               Rising gently <span style={{ fontSize: 18 }}>↗</span>
             </div>
             <button onClick={onTrend} style={{ display: "flex", alignItems: "center", gap: 2, background: "none", border: "none", padding: "2px", cursor: "pointer", fontFamily: FF, flexShrink: 0 }}>
