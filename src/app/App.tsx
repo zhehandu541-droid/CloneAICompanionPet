@@ -342,7 +342,7 @@ function GlucoseChart() {
 // ── Shared helpers ─────────────────────────────────────────────────────
 function BackBtn({ onPress }: { onPress: () => void }) {
   return (
-    <button onClick={onPress} style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", padding: 0, flexShrink: 0 }}>
+    <button onClick={onPress} aria-label="Back" style={{ background: "none", border: "none", cursor: "pointer", display: "flex", alignItems: "center", padding: 0, flexShrink: 0 }}>
       <ChevronLeft size={22} color={TXT} strokeWidth={2.5} />
     </button>
   );
@@ -497,13 +497,29 @@ function PetWithAccessory({ pet, petName, equippedClothing }: { pet: Pet; petNam
 }
 
 // ── Phone shell ────────────────────────────────────────────────────────
+// The shell's design is a fixed 393×852 canvas (every screen's pixel values
+// assume this). On a real device narrower than 393px (e.g. a 375px-wide
+// phone) that fixed width would overflow the viewport and cause horizontal
+// scrolling — so below 393px we uniformly scale the whole canvas down to
+// fit, via a single CSS transform. This changes nothing at 393px or wider
+// (scale stays exactly 1, so the existing pixel-tuned layout is untouched);
+// it only prevents real overflow on narrower phones.
 function PhoneShell({ children }: { children: React.ReactNode }) {
+  const [scale, setScale] = useState(1);
+  useEffect(() => {
+    const compute = () => setScale(Math.min(1, window.innerWidth / 393));
+    compute();
+    window.addEventListener("resize", compute);
+    return () => window.removeEventListener("resize", compute);
+  }, []);
   return (
     <div style={{ minHeight: "100vh", background: "#C8C4B8", display: "flex", alignItems: "center", justifyContent: "center", padding: "20px 0", fontFamily: FF }}>
-      <div style={{ width: 393, height: 852, borderRadius: 54, background: BG, boxShadow: "0 50px 100px rgba(0,0,0,0.40), 0 0 0 2px rgba(255,255,255,0.20), inset 0 0 0 1px rgba(0,0,0,0.06)", overflow: "hidden", position: "relative", flexShrink: 0, fontFamily: FF }}>
-        <div style={{ position: "absolute", top: 14, left: "50%", transform: "translateX(-50%)", width: 120, height: 34, background: "#0a0a0a", borderRadius: 20, zIndex: 200, pointerEvents: "none" }} />
-        {children}
-        <style>{`@keyframes hotspotPulse { 0%, 100% { box-shadow: 0 0 0 1px rgba(255,214,150,0.16); } 50% { box-shadow: 0 0 0 5px rgba(255,214,150,0.45); } }`}</style>
+      <div style={{ width: 393 * scale, height: 852 * scale, flexShrink: 0 }}>
+        <div style={{ width: 393, height: 852, borderRadius: 54, background: BG, boxShadow: "0 50px 100px rgba(0,0,0,0.40), 0 0 0 2px rgba(255,255,255,0.20), inset 0 0 0 1px rgba(0,0,0,0.06)", overflow: "hidden", position: "relative", fontFamily: FF, transform: `scale(${scale})`, transformOrigin: "top left" }}>
+          <div style={{ position: "absolute", top: 14, left: "50%", transform: "translateX(-50%)", width: 120, height: 34, background: "#0a0a0a", borderRadius: 20, zIndex: 200, pointerEvents: "none" }} />
+          {children}
+          <style>{`@keyframes hotspotPulse { 0%, 100% { box-shadow: 0 0 0 1px rgba(255,214,150,0.16); } 50% { box-shadow: 0 0 0 5px rgba(255,214,150,0.45); } }`}</style>
+        </div>
       </div>
     </div>
   );
@@ -575,17 +591,17 @@ function PetSelectScreen({ onNext }: { onNext: (pet: Pet, pn: string, un: string
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 18, marginTop: 28, paddingBottom: 12 }}>
           <div>
-            <label style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase" as const, color: MUTED, display: "block", marginBottom: 7, fontFamily: FF }}>Name them (optional)</label>
+            <label htmlFor="pet-name-input" style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase" as const, color: MUTED, display: "block", marginBottom: 7, fontFamily: FF }}>Name them (optional)</label>
             <div style={{ display: "flex", gap: 8 }}>
-              <input value={petName} onChange={e => setPetName(e.target.value)} placeholder="Your companion" style={{ ...inp, flex: 1, padding: "14px 16px" }} />
+              <input id="pet-name-input" value={petName} onChange={e => setPetName(e.target.value)} placeholder="Your companion" style={{ ...inp, flex: 1, padding: "14px 16px" }} />
               <button onClick={surpriseMe} style={{ padding: "0 14px", borderRadius: 16, background: ROSE + "22", border: `1.5px solid ${ROSE}66`, cursor: "pointer", fontFamily: FF, fontWeight: 800, fontSize: 12, color: ROSE, whiteSpace: "nowrap" as const, flexShrink: 0 }}>
                 Surprise me!
               </button>
             </div>
           </div>
           <div>
-            <label style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase" as const, color: MUTED, display: "block", marginBottom: 7, fontFamily: FF }}>What should I call you?</label>
-            <input value={userName} onChange={e => setUserName(e.target.value)} placeholder="friend" style={{ ...inp, width: "100%", padding: "14px 16px" }} />
+            <label htmlFor="user-name-input" style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase" as const, color: MUTED, display: "block", marginBottom: 7, fontFamily: FF }}>What should I call you?</label>
+            <input id="user-name-input" value={userName} onChange={e => setUserName(e.target.value)} placeholder="friend" style={{ ...inp, width: "100%", padding: "14px 16px" }} />
           </div>
         </div>
       </div>
@@ -733,7 +749,7 @@ function MenuDrawer({ open, onClose, onNavigate, pet }: { open: boolean; onClose
       <div style={{ position: "absolute", top: 0, left: 0, bottom: 0, width: "62%", background: "#F8F4EC", zIndex: 160, borderRadius: "0 24px 24px 0", boxShadow: "4px 0 40px rgba(0,0,0,0.22)", transform: open ? "translateX(0)" : "translateX(-102%)", transition: "transform 0.28s cubic-bezier(0.4,0,0.2,1)", display: "flex", flexDirection: "column", paddingTop: 68, overflowY: "auto" }}>
         <div style={{ padding: "0 22px 14px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <h2 style={{ fontSize: 19, fontWeight: 900, color: TXT, fontFamily: FF, margin: 0 }}>Tend</h2>
-          <button onClick={onClose} style={{ background: "none", border: "none", cursor: "pointer" }}><X size={18} color={MUTED} /></button>
+          <button onClick={onClose} aria-label="Close menu" style={{ background: "none", border: "none", cursor: "pointer" }}><X size={18} color={MUTED} /></button>
         </div>
         {groups.map((group, gi) => (
           <div key={group.section} style={{ marginBottom: gi < groups.length - 1 ? 6 : 12 }}>
@@ -1059,9 +1075,9 @@ function FoodLogScreen({ onBack, onSave }: { onBack: () => void; onSave: () => v
                   <div key={row.label} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
                     <span style={{ fontSize: 11.5, color: MUTED, fontFamily: FF }}>{row.label}</span>
                     <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                      <button onClick={() => row.set(v => Math.max(row.min, Math.round((v - row.step) * 10) / 10))} style={miniStepBtn}><ChevronDown size={12} color={TXT} strokeWidth={2.4} /></button>
+                      <button onClick={() => row.set(v => Math.max(row.min, Math.round((v - row.step) * 10) / 10))} aria-label={`Decrease ${row.label}`} style={miniStepBtn}><ChevronDown size={12} color={TXT} strokeWidth={2.4} /></button>
                       <span style={{ fontSize: 13, fontWeight: 800, color: TXT, fontFamily: FF, width: 40, textAlign: "center" as const }}>{row.step < 1 ? row.value.toFixed(1) : row.value}</span>
-                      <button onClick={() => row.set(v => Math.min(row.max, Math.round((v + row.step) * 10) / 10))} style={miniStepBtn}><ChevronUp size={12} color={TXT} strokeWidth={2.4} /></button>
+                      <button onClick={() => row.set(v => Math.min(row.max, Math.round((v + row.step) * 10) / 10))} aria-label={`Increase ${row.label}`} style={miniStepBtn}><ChevronUp size={12} color={TXT} strokeWidth={2.4} /></button>
                       <span style={{ fontSize: 10, color: MUTED, width: 42, fontFamily: FF }}>{row.unit}</span>
                     </div>
                   </div>
@@ -1110,10 +1126,10 @@ function FoodLogScreen({ onBack, onSave }: { onBack: () => void; onSave: () => v
                 <div style={{ fontSize: 15, fontWeight: 900, color: TXT, fontFamily: FF }}>{weighing.name}</div>
                 <div style={{ fontSize: 11, color: MUTED, fontFamily: FF }}>{weighing.carbsPer100g}g carbs / 100g</div>
               </div>
-              <button onClick={() => setWeighing(null)} style={{ background: "none", border: "none", cursor: "pointer" }}><X size={18} color={MUTED} /></button>
+              <button onClick={() => setWeighing(null)} aria-label="Close" style={{ background: "none", border: "none", cursor: "pointer" }}><X size={18} color={MUTED} /></button>
             </div>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 16, marginBottom: 14 }}>
-              <button onClick={() => setGrams(g => Math.max(0, g - 10))} style={stepBtn}><ChevronDown size={16} color={TXT} strokeWidth={2.4} /></button>
+              <button onClick={() => setGrams(g => Math.max(0, g - 10))} aria-label="Decrease grams" style={stepBtn}><ChevronDown size={16} color={TXT} strokeWidth={2.4} /></button>
               <div style={{ textAlign: "center" as const }}>
                 <input
                   type="number" value={grams}
@@ -1122,7 +1138,7 @@ function FoodLogScreen({ onBack, onSave }: { onBack: () => void; onSave: () => v
                 />
                 <div style={{ fontSize: 11, color: MUTED, fontFamily: FF }}>grams</div>
               </div>
-              <button onClick={() => setGrams(g => g + 10)} style={stepBtn}><ChevronUp size={16} color={TXT} strokeWidth={2.4} /></button>
+              <button onClick={() => setGrams(g => g + 10)} aria-label="Increase grams" style={stepBtn}><ChevronUp size={16} color={TXT} strokeWidth={2.4} /></button>
             </div>
             <div style={{ textAlign: "center" as const, marginBottom: 18, fontSize: 13, color: TXT, fontFamily: FF, fontWeight: 700 }}>
               ≈ {Math.round(weighing.carbsPer100g * grams / 100)}g carbs
@@ -1811,7 +1827,7 @@ function PostcardsScreen({ stamps, pet, petName, unlockedIds, onSendTrip, onBack
                 <div style={{ fontSize: 18, fontWeight: 900, color: TXT, fontFamily: FF }}>{selected.name}</div>
                 <div style={{ fontSize: 11, color: MUTED, fontFamily: FF, marginTop: 2 }}>{selected.date}</div>
               </div>
-              <button onClick={() => setSelected(null)} style={{ background: "#EDE8DE", border: "none", borderRadius: "50%", width: 32, height: 32, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}><X size={16} color={MUTED} /></button>
+              <button onClick={() => setSelected(null)} aria-label="Close" style={{ background: "#EDE8DE", border: "none", borderRadius: "50%", width: 32, height: 32, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}><X size={16} color={MUTED} /></button>
             </div>
             {/* Scenic postcard image */}
             <div style={{ position: "relative", height: 164, margin: "0 16px", borderRadius: 16, overflow: "hidden", marginBottom: 14, border: "3px solid #FBF6EC", boxShadow: "0 2px 10px rgba(61,43,31,0.12)" }}>
@@ -1968,8 +1984,8 @@ function JournalScreen({ pet, petName, onBack }: { pet: Pet; petName: string; on
             <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 12 }}>
               {noteEntries.map((entry, i) => {
                 const d = new Date(entry.timestamp);
-                const dateStr = d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
-                const timeStr = d.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" });
+                const dateStr = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+                const timeStr = d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
                 return (
                   <div key={i} style={{ background: CARD, borderRadius: 16, padding: "12px 14px", border: `1.5px solid ${BORDER}` }}>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
@@ -2197,6 +2213,62 @@ function chatContext(): string {
   return `7-day simulated glucose summary: average ${AVG_G["7"]} mmol/L, ${inRange}% of readings in range, ${high}% ran high. This is prototype data, not a real device feed.`;
 }
 
+// Shown in-chat (never a browser alert) when a request can't reach the
+// server at all — network error, non-2xx response, or the client-side
+// AbortController firing after the timeout below.
+const CONNECTION_FALLBACK_MESSAGE =
+  "Tend could not connect just now. You can still review the simulated trend and add contextual notes.";
+
+// Optional, non-diagnostic fallback used only when the chat was opened from
+// the Trend Detail screen's "Ask companion" button and the connection fails.
+// Mirrors api/chat.ts's DOSE/DIAGNOSIS fallback wording so the offline
+// experience stays consistent with the online safety-boundary responses.
+const TREND_OFFLINE_FALLBACK_MESSAGE =
+  "This simulated trend shows a change over time, but it cannot identify a cause. You may wish to review recent meals, activity, stress, sleep, illness, and the timing of medication, and record any context that feels relevant.";
+
+const DOSE_FALLBACK_MESSAGE =
+  "I cannot calculate insulin doses or recommend treatment changes. Please follow your personal treatment plan or contact your diabetes care team.";
+
+const DIAGNOSIS_FALLBACK_MESSAGE =
+  "I cannot diagnose the cause of a glucose reading. I can help you consider general context you may wish to review, such as meals, activity, stress, illness, sleep, or medication timing.";
+
+// Client-side mirror of api/chat.ts's deterministic pre-check. This is NOT
+// what enforces the safety boundary — that happens server-side, before
+// OpenAI is ever called, and covers every request regardless of network
+// state. This trimmed copy exists purely so that if the network itself is
+// unreachable (the request never reaches the server pre-check at all), the
+// offline fallback shown to the user is still the correct safety-boundary
+// wording rather than a generic "could not connect" message. Kept
+// intentionally small; the server-side list is the source of truth.
+function clientSidePreCheck(message: string): string | null {
+  const DOSE_SIGNALS = [
+    /\bhow (much|many)\b[^.?!]{0,25}\b(insulin|units?)\b/i,
+    /\b(units?)\b[^.?!]{0,25}\b(inject|take|dose)\b/i,
+    /\bcorrection (dose|factor)\b/i,
+    /\bcarb(ohydrate)?\s*ratio\b/i,
+    /\b(increase|decrease|adjust|change|raise|lower)\b[^.?!]{0,25}\bbasal\b/i,
+    /\bpump settings?\b/i,
+    /\bbolus\b/i,
+    /\binsulin\s*(dose|dosage|amount)\b/i,
+  ];
+  const DIAGNOSIS_SIGNALS = [
+    /\bdiagnos/i,
+    /\bwhat caused\b/i,
+    /\bdo i have\b[^.?!]{0,20}\b(diabetes|dka|hypoglycemia|hyperglycemia)\b/i,
+  ];
+  if (DOSE_SIGNALS.some(re => re.test(message))) return DOSE_FALLBACK_MESSAGE;
+  if (DIAGNOSIS_SIGNALS.some(re => re.test(message))) return DIAGNOSIS_FALLBACK_MESSAGE;
+  return null;
+}
+
+// How long a request is allowed to run before we give up and show the
+// offline fallback (AbortController-driven, not a browser timeout alert).
+const CHAT_REQUEST_TIMEOUT_MS = 18000;
+// After this long with no response, the loading bubble's text changes to
+// let the user know it's taking longer than usual — still no alert, no
+// blocking UI, chat stays fully usable.
+const CHAT_SLOW_NOTICE_MS = 8000;
+
 function ChatScreen({ pet, petName, userName, onBack, initialPrompt, onConsumeInitialPrompt }: { pet: Pet; petName: string; userName: string; onBack: () => void; initialPrompt?: string | null; onConsumeInitialPrompt?: () => void }) {
   // Chat "remembers" — conversation is saved to this device so it's still here
   // next time you open Chat, instead of resetting every visit.
@@ -2204,42 +2276,85 @@ function ChatScreen({ pet, petName, userName, onBack, initialPrompt, onConsumeIn
     { from: "pet", text: `Hi ${userName} — I'm glad you came by. How are you feeling today?` },
   ]));
   const [input, setInput]       = useState("");
-  const [typing, setTyping]     = useState(false);
+  // "idle" | "thinking" | "slow" — replaces the old boolean `typing` flag so
+  // the loading bubble can show the "taking longer than usual" copy after
+  // CHAT_SLOW_NOTICE_MS without a second piece of state to keep in sync.
+  const [loadingPhase, setLoadingPhase] = useState<"idle" | "thinking" | "slow">("idle");
   const [showPrompts, setShowPrompts] = useState(() => msgs.length <= 1);
+  // The most recent message that failed to get a response, so a subtle
+  // "Try again" action can resend exactly that message. Cleared on any
+  // successful send.
+  const [lastFailedMessage, setLastFailedMessage] = useState<string | null>(null);
   const endRef                  = useRef<HTMLDivElement>(null);
-  useEffect(() => { endRef.current?.scrollIntoView({ behavior: "smooth" }); }, [msgs, typing]);
+  const timeoutIdRef            = useRef<number | null>(null);
+  const slowIdRef               = useRef<number | null>(null);
+  // Captured once, at mount, before initialPrompt is consumed/cleared — used
+  // only to pick the right offline fallback message (see item 5 above).
+  const [openedFromTrend]       = useState(() => initialPrompt === "Explain my recent trend");
+  useEffect(() => { endRef.current?.scrollIntoView({ behavior: "smooth" }); }, [msgs, loadingPhase]);
   useEffect(() => { saveLS(LS_KEYS.chatHistory, msgs); }, [msgs]);
+  // Belt-and-braces cleanup if the component unmounts mid-request.
+  useEffect(() => () => {
+    if (timeoutIdRef.current) window.clearTimeout(timeoutIdRef.current);
+    if (slowIdRef.current) window.clearTimeout(slowIdRef.current);
+  }, []);
 
   const send = (text?: string) => {
     const msg = (text ?? input).trim();
     if (!msg) return;
+    // Prevent duplicate in-flight requests — ignore taps while one is pending.
+    if (loadingPhase !== "idle") return;
+
     const priorMsgs = msgs;
     setMsgs(m => [...m, { from: "user", text: msg }]);
     setInput("");
     setShowPrompts(false);
-    setTyping(true);
+    setLastFailedMessage(null);
+    setLoadingPhase("thinking");
 
-    // DIAGNOSTIC MODE — scripted fallback temporarily disabled on purpose so
-    // real /api/chat failures are visible instead of silently masked by
-    // pickReply(). Restore the pickReply() fallback in both branches below
-    // once /api/chat is confirmed to reliably return real text.
+    const controller = new AbortController();
+    timeoutIdRef.current = window.setTimeout(() => controller.abort(), CHAT_REQUEST_TIMEOUT_MS);
+    slowIdRef.current = window.setTimeout(() => setLoadingPhase("slow"), CHAT_SLOW_NOTICE_MS);
+
     fetch("/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: msg, history: priorMsgs, context: chatContext() }),
+      signal: controller.signal,
     })
       .then(async r => {
         const data = await r.json().catch(() => ({}));
         if (!r.ok) throw new Error(`api/chat ${r.status}: ${data?.error ?? "unknown error"}`);
-        return data as { reply?: string; source?: string };
+        return data as { reply?: string; type?: string; message?: string; source?: string };
       })
       .then(data => {
-        setMsgs(m => [...m, { from: "pet", text: data.reply ?? "" }]);
+        // The server-side safety pre-check returns { type: "safety_boundary",
+        // message } instead of { reply } for intercepted requests — this is
+        // a normal, successful turn, not an error, so it's handled here
+        // rather than in .catch().
+        const text = data.type === "safety_boundary" ? (data.message ?? "") : (data.reply ?? "");
+        setMsgs(m => [...m, { from: "pet", text }]);
       })
-      .catch(err => {
-        setMsgs(m => [...m, { from: "pet", text: `[/api/chat failed: ${err instanceof Error ? err.message : "unknown error"}]` }]);
+      .catch(() => {
+        // Network error, non-2xx response, or the AbortController firing on
+        // timeout all land here. Always a calm in-chat message, never a
+        // browser alert. If the failed message itself looks like a dosing/
+        // diagnosis request, keep showing the safety-boundary wording even
+        // though we're offline — otherwise fall back to the trend-specific
+        // or generic "could not connect" copy.
+        const preCheck = clientSidePreCheck(msg);
+        const fallback = preCheck ?? (openedFromTrend ? TREND_OFFLINE_FALLBACK_MESSAGE : CONNECTION_FALLBACK_MESSAGE);
+        setMsgs(m => [...m, { from: "pet", text: fallback }]);
+        setLastFailedMessage(msg);
       })
-      .finally(() => setTyping(false));
+      .finally(() => {
+        // Always clear loading state and pending timers, on every path.
+        if (timeoutIdRef.current) window.clearTimeout(timeoutIdRef.current);
+        if (slowIdRef.current) window.clearTimeout(slowIdRef.current);
+        timeoutIdRef.current = null;
+        slowIdRef.current = null;
+        setLoadingPhase("idle");
+      });
   };
 
   useEffect(() => {
@@ -2277,14 +2392,22 @@ function ChatScreen({ pet, petName, userName, onBack, initialPrompt, onConsumeIn
             <div style={{ maxWidth: "72%", padding: "10px 14px", borderRadius: 18, borderBottomLeftRadius: msg.from === "pet" ? 4 : 18, borderBottomRightRadius: msg.from === "user" ? 4 : 18, background: msg.from === "pet" ? CARD : pet.color, color: msg.from === "pet" ? TXT : "#fff", fontSize: 14, fontWeight: 500, lineHeight: 1.55, fontFamily: FF, boxShadow: "0 2px 8px rgba(0,0,0,0.07)" }}>{msg.text}</div>
           </div>
         ))}
-        {typing && (
+        {loadingPhase !== "idle" && (
           <div style={{ display: "flex", gap: 8, alignItems: "flex-end" }}>
             <div style={{ width: 32, height: 32, borderRadius: "50%", overflow: "hidden", background: "#F0EAE0", flexShrink: 0 }}>
               <ImageWithFallback src={pet.image} alt="" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
             </div>
-            <div style={{ padding: "12px 16px", borderRadius: 18, borderBottomLeftRadius: 4, background: CARD }}>
+            <div style={{ padding: "10px 14px", borderRadius: 18, borderBottomLeftRadius: 4, background: CARD, display: "flex", alignItems: "center", gap: 8 }}>
               <div style={{ display: "flex", gap: 4 }}>{[0,1,2].map(i => <div key={i} style={{ width: 7, height: 7, borderRadius: "50%", background: MUTED, animation: `chatdot 1.2s ${i*0.2}s infinite` }} />)}</div>
+              <span style={{ fontSize: 11.5, color: MUTED, fontFamily: FF }}>{loadingPhase === "slow" ? "Tend is taking a little longer than usual…" : "Tend is thinking…"}</span>
             </div>
+          </div>
+        )}
+        {lastFailedMessage && loadingPhase === "idle" && (
+          <div style={{ display: "flex", justifyContent: "center", padding: "2px 0" }}>
+            <button onClick={() => send(lastFailedMessage)} style={{ padding: "7px 16px", borderRadius: 20, background: CARD, border: `1.5px solid ${BORDER}`, cursor: "pointer", fontFamily: FF, fontSize: 12, fontWeight: 700, color: TXT }}>
+              Try again
+            </button>
           </div>
         )}
         <div ref={endRef} />
@@ -2300,7 +2423,7 @@ function ChatScreen({ pet, petName, userName, onBack, initialPrompt, onConsumeIn
       )}
       <div style={{ padding: "8px 16px 40px", background: CARD, borderTop: `1px solid ${BORDER}`, display: "flex", gap: 10, alignItems: "center" }}>
         <input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === "Enter" && send()} placeholder={`Talk to ${petName}…`} style={{ flex: 1, padding: "12px 16px", borderRadius: 24, background: BG, border: `1.5px solid ${BORDER}`, fontFamily: FF, fontSize: 14, color: TXT, outline: "none" }} />
-        <button onClick={() => send()} disabled={!input.trim()} style={{ width: 44, height: 44, borderRadius: "50%", background: input.trim() ? pet.color : "#D8D4CC", border: "none", cursor: input.trim() ? "pointer" : "default", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: "background 0.18s" }}>
+        <button onClick={() => send()} disabled={!input.trim() || loadingPhase !== "idle"} aria-label="Send message" style={{ width: 44, height: 44, borderRadius: "50%", background: input.trim() && loadingPhase === "idle" ? pet.color : "#D8D4CC", border: "none", cursor: input.trim() && loadingPhase === "idle" ? "pointer" : "default", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: "background 0.18s" }}>
           <Send size={17} color="#fff" />
         </button>
       </div>
@@ -2527,15 +2650,15 @@ function LogScreen({ onBack, onSaved }: { onBack: () => void; onSaved: () => voi
                   <div style={{ fontSize: 12.5, fontWeight: 800, color: TXT, fontFamily: FF, marginBottom: 10 }}>Dose</div>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 5 }}>
-                      <button onClick={() => adjustWhole(1)} style={stepBtn}><ChevronUp size={15} color={TXT} strokeWidth={2.4} /></button>
+                      <button onClick={() => adjustWhole(1)} aria-label="Increase dose whole units" style={stepBtn}><ChevronUp size={15} color={TXT} strokeWidth={2.4} /></button>
                       <div style={{ fontSize: 28, fontWeight: 900, color: ROSE, fontFamily: FF, width: 38, textAlign: "center" as const }}>{whole}</div>
-                      <button onClick={() => adjustWhole(-1)} style={stepBtn}><ChevronDown size={15} color={TXT} strokeWidth={2.4} /></button>
+                      <button onClick={() => adjustWhole(-1)} aria-label="Decrease dose whole units" style={stepBtn}><ChevronDown size={15} color={TXT} strokeWidth={2.4} /></button>
                     </div>
                     <div style={{ fontSize: 26, fontWeight: 900, color: ROSE, fontFamily: FF }}>.</div>
                     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 5 }}>
-                      <button onClick={() => adjustTenths(1)} style={stepBtn}><ChevronUp size={15} color={TXT} strokeWidth={2.4} /></button>
+                      <button onClick={() => adjustTenths(1)} aria-label="Increase dose tenths" style={stepBtn}><ChevronUp size={15} color={TXT} strokeWidth={2.4} /></button>
                       <div style={{ fontSize: 28, fontWeight: 900, color: ROSE, fontFamily: FF, width: 30, textAlign: "center" as const }}>{tenths}</div>
-                      <button onClick={() => adjustTenths(-1)} style={stepBtn}><ChevronDown size={15} color={TXT} strokeWidth={2.4} /></button>
+                      <button onClick={() => adjustTenths(-1)} aria-label="Decrease dose tenths" style={stepBtn}><ChevronDown size={15} color={TXT} strokeWidth={2.4} /></button>
                     </div>
                     <span style={{ fontSize: 13, fontWeight: 800, color: MUTED, fontFamily: FF, marginLeft: 4 }}>units</span>
                   </div>
@@ -2562,7 +2685,7 @@ function LogScreen({ onBack, onSaved }: { onBack: () => void; onSaved: () => voi
                 <div style={{ width: 34, height: 34, borderRadius: 10, background: SAGE + "22", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><RefreshCw size={16} color={SAGE} /></div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 12.5, fontWeight: 800, color: TXT, fontFamily: FF }}>
-                    Marked for {new Date().toLocaleDateString(undefined, { month: "short", day: "numeric" })}
+                    Marked for {new Date().toLocaleDateString("en-US", { month: "short", day: "numeric" })}
                   </div>
                   <div style={{ fontSize: 11, color: MUTED, marginTop: 2, lineHeight: 1.5 }}>
                     {lastSiteChange !== null
@@ -2734,7 +2857,7 @@ function CompanionSpaceScreen({ pet, petName, onBack, onChat, onFriendChat }: { 
                 </div>
                 <span style={{ fontSize: 15, fontWeight: 900, color: TXT, fontFamily: FF }}>Share a small update</span>
               </div>
-              <button onClick={() => setComposeOpen(false)} style={{ background: "#EDE8DE", border: "none", borderRadius: "50%", width: 30, height: 30, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}><X size={15} color={MUTED} /></button>
+              <button onClick={() => setComposeOpen(false)} aria-label="Close" style={{ background: "#EDE8DE", border: "none", borderRadius: "50%", width: 30, height: 30, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}><X size={15} color={MUTED} /></button>
             </div>
             <textarea
               autoFocus
@@ -2854,7 +2977,7 @@ function FriendChatScreen({ friendId, pet, onBack }: { friendId: number; pet: Pe
           placeholder="Say something…"
           style={{ flex: 1, padding: "12px 16px", borderRadius: 22, background: BG, border: `1.5px solid ${BORDER}`, fontFamily: FF, fontSize: 14, color: TXT, outline: "none" }}
         />
-        <button onClick={send} style={{ width: 42, height: 42, borderRadius: "50%", background: ROSE, border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+        <button onClick={send} aria-label="Send message" style={{ width: 42, height: 42, borderRadius: "50%", background: ROSE, border: "none", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
           <Send size={16} color="#fff" />
         </button>
       </div>
