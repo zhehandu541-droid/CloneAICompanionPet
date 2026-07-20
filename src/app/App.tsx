@@ -537,9 +537,9 @@ function WelcomeScreen({ onNext }: { onNext: () => void }) {
           A low-pressure gamified CGM companion<br />for young people with Type 1 Diabetes.
         </p>
 
-        <p style={{ fontSize: 11.5, fontWeight: 400, color: MUTED, lineHeight: 1.45, margin: "16px 0 0", maxWidth: 300, fontFamily: FF }}>Explore trends with AI support, log everyday context, and connect through play and community.</p>
+        <button onClick={onNext} style={{ width: "100%", padding: "17px 0", borderRadius: 18, background: ROSE, color: "#fff", border: "none", cursor: "pointer", fontFamily: FF, fontWeight: 800, fontSize: 16, boxShadow: "0 8px 24px rgba(196,145,122,0.35)", marginTop: 30, flexShrink: 0 }}>Enter Prototype</button>
 
-        <button onClick={onNext} style={{ width: "100%", padding: "17px 0", borderRadius: 18, background: ROSE, color: "#fff", border: "none", cursor: "pointer", fontFamily: FF, fontWeight: 800, fontSize: 16, boxShadow: "0 8px 24px rgba(196,145,122,0.35)", marginTop: 22, flexShrink: 0 }}>Enter Prototype</button>
+        <p style={{ fontSize: 11.5, fontWeight: 400, color: MUTED, lineHeight: 1.45, margin: "13px 0 0", maxWidth: 300, fontFamily: FF }}>Explore trends with AI support, log everyday context, and connect through play and community.</p>
       </div>
     </div>
   );
