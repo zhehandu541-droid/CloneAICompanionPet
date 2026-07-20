@@ -522,12 +522,27 @@ function WelcomeScreen({ onNext }: { onNext: () => void }) {
         </div>
         <div style={{ height: 58 }} />
       </div>
-      <div style={{ flex: 1, background: CARD, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "28px 32px 48px", gap: 18, textAlign: "center", borderRadius: "0 0 54px 54px" }}>
+      <div style={{ flex: 1, minHeight: 0, overflowY: "auto", background: CARD, display: "flex", flexDirection: "column", alignItems: "center", padding: "24px 28px 36px", gap: 16, textAlign: "center", borderRadius: "0 0 54px 54px" }}>
         <div>
           <h1 style={{ fontSize: 44, fontWeight: 900, color: TXT, letterSpacing: "-0.5px", margin: "0 0 10px", fontFamily: FF }}>Tend</h1>
-          <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.65, margin: 0, maxWidth: 250 }}>Gentle care for your glucose patterns.</p>
+          <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.5, margin: 0, maxWidth: 290 }}>A low-pressure gamified CGM companion designed for young people living with Type 1 Diabetes.</p>
         </div>
-        <button onClick={onNext} style={{ width: "100%", padding: "17px 0", borderRadius: 18, background: ROSE, color: "#fff", border: "none", cursor: "pointer", fontFamily: FF, fontWeight: 800, fontSize: 16, boxShadow: "0 8px 24px rgba(196,145,122,0.35)", marginTop: 6 }}>{"Let's begin"}</button>
+
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
+          <p style={{ fontSize: 12.5, fontWeight: 700, color: TXT, lineHeight: 1.4, margin: 0, maxWidth: 280 }}>Tend explores how an AI virtual pet and non-punitive game elements may help users:</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: 6, alignItems: "flex-start", width: "fit-content" }}>
+            {["Understand trends with AI support", "Log everyday context with ease", "Engage through play and community"].map(pt => (
+              <div key={pt} style={{ display: "flex", alignItems: "center", gap: 7 }}>
+                <div style={{ width: 5, height: 5, borderRadius: "50%", background: ROSE, flexShrink: 0 }} />
+                <span style={{ fontSize: 12.5, fontWeight: 600, color: TXT, fontFamily: FF }}>{pt}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <p style={{ fontSize: 10.5, color: MUTED, lineHeight: 1.5, margin: 0, maxWidth: 280, opacity: 0.85 }}>Uses simulated CGM data. This prototype is designed for research and usability evaluation. It is not a medical device and does not provide medical advice.</p>
+
+        <button onClick={onNext} style={{ width: "100%", padding: "17px 0", borderRadius: 18, background: ROSE, color: "#fff", border: "none", cursor: "pointer", fontFamily: FF, fontWeight: 800, fontSize: 16, boxShadow: "0 8px 24px rgba(196,145,122,0.35)", marginTop: 4, flexShrink: 0 }}>Enter Prototype</button>
       </div>
     </div>
   );
