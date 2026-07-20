@@ -520,26 +520,24 @@ function WelcomeScreen({ onNext }: { onNext: () => void }) {
 
       {/* Top research notice — one plain sentence, secondary in weight, never overlaps the pet below it */}
       <div style={{ position: "absolute", top: 58, left: 16, right: 16, zIndex: 50, background: "rgba(255,255,255,0.50)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.60)", borderRadius: 16, padding: "10px 14px" }}>
-        <p style={{ margin: 0, fontSize: 11, fontWeight: 400, lineHeight: 1.45, color: "rgba(61,43,31,0.78)", textAlign: "left", fontFamily: FF }}>
+        <p style={{ margin: 0, fontSize: 11, fontWeight: 400, lineHeight: 1.45, color: "#746761", textAlign: "left", fontFamily: FF }}>
           Tend is an AI-powered research prototype using simulated CGM data to offer general guidance on glucose trends and daily context; it does not provide diagnosis or insulin-dosing advice.
         </p>
       </div>
 
-      {/* Main visual group — pet, title, statement, supporting line, button — centred as one unit, nudged down slightly for balance */}
+      {/* Main visual group — pet, title, statement, button — centred as one unit, nudged down slightly for balance */}
       <div style={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 16px", textAlign: "center", transform: "translateY(48px)" }}>
         <div style={{ width: 230, height: 230, flexShrink: 0, filter: "drop-shadow(0 16px 40px rgba(61,43,31,0.28))" }}>
           <ImageWithFallback src={redPandaCoffee} alt="Tend mascot" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
         </div>
 
-        <h1 style={{ fontSize: 44, fontWeight: 900, color: TXT, letterSpacing: "-0.5px", margin: "18px 0 0", fontFamily: FF }}>Tend</h1>
+        <h1 style={{ fontSize: 44, fontWeight: 900, color: "#4B352D", letterSpacing: "-0.5px", margin: "18px 0 0", fontFamily: FF }}>Tend</h1>
 
-        <p style={{ fontSize: 15, fontWeight: 600, color: TXT, lineHeight: 1.35, margin: "10px 0 0", fontFamily: FF }}>
+        <p style={{ fontSize: 15, fontWeight: 600, color: "#6B554A", lineHeight: 1.35, margin: "10px 0 0", fontFamily: FF }}>
           A low-pressure gamified CGM companion for young people with Type 1 Diabetes.
         </p>
 
-        <button onClick={onNext} style={{ width: "100%", padding: "17px 0", borderRadius: 18, background: ROSE, color: "#fff", border: "none", cursor: "pointer", fontFamily: FF, fontWeight: 800, fontSize: 16, boxShadow: "0 8px 24px rgba(196,145,122,0.35)", marginTop: 30, flexShrink: 0 }}>Enter Prototype</button>
-
-        <p style={{ fontSize: 11.5, fontWeight: 400, color: MUTED, lineHeight: 1.45, margin: "13px 0 0", maxWidth: 300, fontFamily: FF }}>Explore trends with AI support, log everyday context, and connect through play and community.</p>
+        <button onClick={onNext} style={{ width: "100%", padding: "17px 0", borderRadius: 18, background: ROSE, color: "#fff", border: "none", cursor: "pointer", fontFamily: FF, fontWeight: 800, fontSize: 16, boxShadow: "0 8px 24px rgba(196,145,122,0.35)", marginTop: 56, flexShrink: 0 }}>Enter Prototype</button>
       </div>
     </div>
   );
