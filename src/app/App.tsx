@@ -511,38 +511,47 @@ function PhoneShell({ children }: { children: React.ReactNode }) {
 
 // ── Welcome ────────────────────────────────────────────────────────────
 function WelcomeScreen({ onNext }: { onNext: () => void }) {
+  const [showNotice, setShowNotice] = useState(true);
   return (
-    <div style={{ height: "100%", display: "flex", flexDirection: "column", overflow: "hidden" }}>
-      <div style={{ flex: "0 0 60%", position: "relative", overflow: "hidden", background: "radial-gradient(ellipse at 25% 35%, rgba(255,200,210,0.85) 0%, transparent 55%), radial-gradient(ellipse at 78% 18%, rgba(180,230,210,0.80) 0%, transparent 50%), radial-gradient(ellipse at 55% 75%, rgba(255,218,185,0.75) 0%, transparent 50%), radial-gradient(ellipse at 8% 72%, rgba(200,205,240,0.70) 0%, transparent 48%), #F0EBE3" }}>
-        <div style={{ position: "absolute", inset: 0, background: "repeating-linear-gradient(115deg, transparent, transparent 18px, rgba(255,255,255,0.10) 18px, rgba(255,255,255,0.10) 19px)", pointerEvents: "none" }} />
-        <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", paddingTop: 24 }}>
-          <div style={{ width: 230, height: 230, filter: "drop-shadow(0 16px 40px rgba(61,43,31,0.28))" }}>
-            <ImageWithFallback src={redPandaCoffee} alt="Tend mascot" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
-          </div>
+    <div style={{
+      height: "100%", overflow: "hidden", position: "relative",
+      background: "radial-gradient(ellipse at 25% 22%, rgba(255,200,210,0.85) 0%, transparent 55%), radial-gradient(ellipse at 78% 14%, rgba(180,230,210,0.80) 0%, transparent 50%), radial-gradient(ellipse at 58% 58%, rgba(255,218,185,0.75) 0%, transparent 50%), radial-gradient(ellipse at 8% 66%, rgba(200,205,240,0.70) 0%, transparent 48%), radial-gradient(ellipse at 50% 98%, rgba(255,205,190,0.55) 0%, transparent 55%), #F0EBE3",
+    }}>
+      <div style={{ position: "absolute", inset: 0, background: "repeating-linear-gradient(115deg, transparent, transparent 18px, rgba(255,255,255,0.10) 18px, rgba(255,255,255,0.10) 19px)", pointerEvents: "none" }} />
+
+      {/* Prototype disclaimer — compact dismissible notice below the notch, absolute so it never shifts layout */}
+      {showNotice && (
+        <div style={{ position: "absolute", top: 58, left: 16, right: 16, zIndex: 50, display: "flex", alignItems: "flex-start", gap: 8, background: "rgba(255,255,255,0.55)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.65)", borderRadius: 16, padding: "9px 12px 9px 14px", boxShadow: "0 4px 16px rgba(61,43,31,0.10)" }}>
+          <p style={{ flex: 1, margin: 0, fontSize: 10.5, lineHeight: 1.4, color: TXT, fontFamily: FF }}>Research prototype using simulated CGM data. Not a medical device or source of medical advice.</p>
+          <button onClick={() => setShowNotice(false)} aria-label="Dismiss notice" style={{ background: "none", border: "none", padding: 3, marginTop: -1, cursor: "pointer", flexShrink: 0, display: "flex" }}>
+            <X size={13} color={MUTED} />
+          </button>
         </div>
-        <div style={{ height: 58 }} />
-      </div>
-      <div style={{ flex: 1, minHeight: 0, overflowY: "auto", background: CARD, display: "flex", flexDirection: "column", alignItems: "center", padding: "24px 28px 36px", gap: 16, textAlign: "center", borderRadius: "0 0 54px 54px" }}>
-        <div>
-          <h1 style={{ fontSize: 44, fontWeight: 900, color: TXT, letterSpacing: "-0.5px", margin: "0 0 10px", fontFamily: FF }}>Tend</h1>
-          <p style={{ fontSize: 15, color: MUTED, lineHeight: 1.5, margin: 0, maxWidth: 290 }}>A low-pressure gamified CGM companion designed for young people living with Type 1 Diabetes.</p>
+      )}
+
+      {/* Everything else, vertically balanced as one group so it always fits without scrolling */}
+      <div style={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 26px", gap: 18, textAlign: "center" }}>
+        <div style={{ width: 230, height: 230, flexShrink: 0, filter: "drop-shadow(0 16px 40px rgba(61,43,31,0.28))" }}>
+          <ImageWithFallback src={redPandaCoffee} alt="Tend mascot" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
-          <p style={{ fontSize: 12.5, fontWeight: 700, color: TXT, lineHeight: 1.4, margin: 0, maxWidth: 280 }}>Tend explores how an AI virtual pet and non-punitive game elements may help users:</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 6, alignItems: "flex-start", width: "fit-content" }}>
-            {["Understand trends with AI support", "Log everyday context with ease", "Engage through play and community"].map(pt => (
-              <div key={pt} style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                <div style={{ width: 5, height: 5, borderRadius: "50%", background: ROSE, flexShrink: 0 }} />
-                <span style={{ fontSize: 12.5, fontWeight: 600, color: TXT, fontFamily: FF }}>{pt}</span>
+        <div>
+          <h1 style={{ fontSize: 44, fontWeight: 900, color: TXT, letterSpacing: "-0.5px", margin: "0 0 6px", fontFamily: FF }}>Tend</h1>
+          <p style={{ fontSize: 15, fontWeight: 700, color: TXT, lineHeight: 1.3, margin: "0 auto", maxWidth: 300 }}>A low-pressure gamified CGM companion for young people with Type 1 Diabetes.</p>
+        </div>
+
+        <div style={{ width: "100%", background: "rgba(255,252,248,0.42)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", border: "1px solid rgba(255,255,255,0.55)", borderRadius: 20, padding: "14px 18px 12px", boxShadow: "0 8px 24px rgba(61,43,31,0.08)", flexShrink: 0 }}>
+          <p style={{ fontSize: 11.5, fontWeight: 500, color: MUTED, margin: "0 0 6px", lineHeight: 1.35, fontFamily: FF }}>Tend combines an AI virtual pet with non-punitive game elements to support:</p>
+          <div>
+            {["Understand glucose trends", "Record daily context", "Engage through play and community"].map((t, i) => (
+              <div key={t} style={{ padding: "7px 0", borderTop: i === 0 ? "none" : "1px solid rgba(61,43,31,0.09)" }}>
+                <span style={{ fontSize: 13.5, fontWeight: 700, color: TXT, fontFamily: FF }}>{t}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <p style={{ fontSize: 10.5, color: MUTED, lineHeight: 1.5, margin: 0, maxWidth: 280, opacity: 0.85 }}>Uses simulated CGM data. This prototype is designed for research and usability evaluation. It is not a medical device and does not provide medical advice.</p>
-
-        <button onClick={onNext} style={{ width: "100%", padding: "17px 0", borderRadius: 18, background: ROSE, color: "#fff", border: "none", cursor: "pointer", fontFamily: FF, fontWeight: 800, fontSize: 16, boxShadow: "0 8px 24px rgba(196,145,122,0.35)", marginTop: 4, flexShrink: 0 }}>Enter Prototype</button>
+        <button onClick={onNext} style={{ width: "100%", padding: "17px 0", borderRadius: 18, background: ROSE, color: "#fff", border: "none", cursor: "pointer", fontFamily: FF, fontWeight: 800, fontSize: 16, boxShadow: "0 8px 24px rgba(196,145,122,0.35)", flexShrink: 0 }}>Enter Prototype</button>
       </div>
     </div>
   );
