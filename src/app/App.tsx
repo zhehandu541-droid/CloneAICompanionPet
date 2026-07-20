@@ -533,11 +533,11 @@ function WelcomeScreen({ onNext }: { onNext: () => void }) {
 
         <h1 style={{ fontSize: 44, fontWeight: 900, color: "#4B352D", letterSpacing: "-0.5px", margin: "18px 0 0", fontFamily: FF }}>Tend</h1>
 
-        <p style={{ fontSize: 16, fontWeight: 400, color: "#8C7A6D", lineHeight: 1.5, letterSpacing: "0.2px", margin: "10px 0 0", fontFamily: FF }}>
+        <p style={{ fontSize: 15, fontWeight: 500, color: "#6B554A", lineHeight: 1.5, letterSpacing: "0.1px", margin: "10px 0 0", fontFamily: "'Fredoka', sans-serif" }}>
           A low-pressure gamified CGM companion for<br />young people with Type 1 Diabetes.
         </p>
 
-        <button onClick={onNext} style={{ width: "100%", padding: "17px 0", borderRadius: 18, background: ROSE, color: "#fff", border: "none", cursor: "pointer", fontFamily: FF, fontWeight: 800, fontSize: 16, boxShadow: "0 8px 24px rgba(196,145,122,0.35)", marginTop: 84, flexShrink: 0 }}>Enter Prototype</button>
+        <button onClick={onNext} style={{ width: "78%", padding: "17px 0", borderRadius: 18, background: ROSE, color: "#fff", border: "none", cursor: "pointer", fontFamily: FF, fontWeight: 800, fontSize: 16, boxShadow: "0 8px 24px rgba(196,145,122,0.35)", margin: "84px auto 0", flexShrink: 0 }}>Enter Prototype</button>
       </div>
     </div>
   );
