@@ -526,18 +526,18 @@ function WelcomeScreen({ onNext }: { onNext: () => void }) {
       </div>
 
       {/* Main visual group — pet, title, statement, button — centred as one unit, nudged down slightly for balance */}
-      <div style={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 10px", textAlign: "center", transform: "translateY(48px)" }}>
+      <div style={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 6px", textAlign: "center", transform: "translateY(48px)" }}>
         <div style={{ width: 230, height: 230, flexShrink: 0, filter: "drop-shadow(0 16px 40px rgba(61,43,31,0.28))" }}>
           <ImageWithFallback src={redPandaCoffee} alt="Tend mascot" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
         </div>
 
         <h1 style={{ fontSize: 44, fontWeight: 900, color: "#4B352D", letterSpacing: "-0.5px", margin: "18px 0 0", fontFamily: FF }}>Tend</h1>
 
-        <p style={{ fontSize: 15, fontWeight: 500, color: "#6B554A", lineHeight: 1.5, letterSpacing: "0.1px", margin: "10px 0 0", fontFamily: "'Fredoka', sans-serif" }}>
+        <p style={{ fontSize: 16, fontWeight: 500, color: "#6B554A", lineHeight: 1.65, letterSpacing: "0.1px", margin: "10px 0 0", fontFamily: "'Fredoka', sans-serif" }}>
           A low-pressure gamified CGM companion for<br />young people with Type 1 Diabetes.
         </p>
 
-        <button onClick={onNext} style={{ width: "78%", padding: "17px 0", borderRadius: 18, background: ROSE, color: "#fff", border: "none", cursor: "pointer", fontFamily: FF, fontWeight: 800, fontSize: 16, boxShadow: "0 8px 24px rgba(196,145,122,0.35)", margin: "84px auto 0", flexShrink: 0 }}>Enter Prototype</button>
+        <button onClick={onNext} style={{ width: "78%", padding: "17px 0", borderRadius: 18, background: ROSE, color: "#fff", border: "none", cursor: "pointer", fontFamily: FF, fontWeight: 800, fontSize: 16, boxShadow: "0 8px 24px rgba(196,145,122,0.35)", margin: "104px auto 0", flexShrink: 0 }}>Enter Prototype</button>
       </div>
     </div>
   );
