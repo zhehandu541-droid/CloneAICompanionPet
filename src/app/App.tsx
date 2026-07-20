@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
-import { ChevronLeft, ChevronUp, ChevronDown, Send, X, Search, Camera, Lock, Syringe, Zap, Utensils, Activity, Moon, TrendingUp, Sparkles, Wind, ShoppingBag, HeartPulse, Smile, RefreshCw, BookOpen } from "lucide-react";
+import { ChevronLeft, ChevronUp, ChevronDown, Send, X, Search, Camera, Lock, Syringe, Zap, Utensils, Activity, Moon, TrendingUp, Sparkles, Wind, ShoppingBag, HeartPulse, Smile, RefreshCw, BookOpen, ArrowUpRight } from "lucide-react";
 
 // ── localStorage helpers ────────────────────────────────────────────────
 function loadLS<T>(key: string, fallback: T): T {
@@ -654,7 +654,7 @@ function HomeScreen({ pet, petName, stamps, numbersVisible, equippedClothing, on
           {/* Right: "Rising gently" + arrow, enlarged, with "View trend" link beneath */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 5, flexShrink: 0 }}>
             <div style={{ fontSize: 18, fontWeight: 900, color: valueColor, display: "flex", alignItems: "center", gap: 4, whiteSpace: "nowrap" }}>
-              Rising gently <span style={{ fontSize: 18 }}>↗</span>
+              Rising gently <ArrowUpRight size={17} color={valueColor} strokeWidth={3} />
             </div>
             <button onClick={onTrend} style={{ display: "flex", alignItems: "center", gap: 2, background: "none", border: "none", padding: "2px", cursor: "pointer", fontFamily: FF, flexShrink: 0 }}>
               <span style={{ fontSize: 11.5, fontWeight: 800, color: TXT }}>View trend</span>
