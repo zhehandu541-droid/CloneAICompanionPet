@@ -511,7 +511,6 @@ function PhoneShell({ children }: { children: React.ReactNode }) {
 
 // ── Welcome ────────────────────────────────────────────────────────────
 function WelcomeScreen({ onNext }: { onNext: () => void }) {
-  const [showNotice, setShowNotice] = useState(true);
   return (
     <div style={{
       height: "100%", overflow: "hidden", position: "relative",
@@ -519,39 +518,28 @@ function WelcomeScreen({ onNext }: { onNext: () => void }) {
     }}>
       <div style={{ position: "absolute", inset: 0, background: "repeating-linear-gradient(115deg, transparent, transparent 18px, rgba(255,255,255,0.10) 18px, rgba(255,255,255,0.10) 19px)", pointerEvents: "none" }} />
 
-      {/* Prototype disclaimer — compact dismissible notice below the notch, absolute so it never shifts layout */}
-      {showNotice && (
-        <div style={{ position: "absolute", top: 58, left: 16, right: 16, zIndex: 50, display: "flex", alignItems: "flex-start", gap: 8, background: "rgba(255,255,255,0.55)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.65)", borderRadius: 16, padding: "9px 12px 9px 14px", boxShadow: "0 4px 16px rgba(61,43,31,0.10)" }}>
-          <p style={{ flex: 1, margin: 0, fontSize: 10.5, lineHeight: 1.4, color: TXT, fontFamily: FF }}>Research prototype using simulated CGM data. Not a medical device or source of medical advice.</p>
-          <button onClick={() => setShowNotice(false)} aria-label="Dismiss notice" style={{ background: "none", border: "none", padding: 3, marginTop: -1, cursor: "pointer", flexShrink: 0, display: "flex" }}>
-            <X size={13} color={MUTED} />
-          </button>
-        </div>
-      )}
+      {/* Top research notice — one plain sentence, secondary in weight, never overlaps the pet below it */}
+      <div style={{ position: "absolute", top: 58, left: 16, right: 16, zIndex: 50, background: "rgba(255,255,255,0.50)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.60)", borderRadius: 16, padding: "10px 14px" }}>
+        <p style={{ margin: 0, fontSize: 11, fontWeight: 400, lineHeight: 1.45, color: "rgba(61,43,31,0.78)", textAlign: "left", fontFamily: FF }}>
+          Tend is an AI-powered research prototype using simulated CGM data to offer general guidance on glucose trends and daily context; it does not provide diagnosis or insulin-dosing advice.
+        </p>
+      </div>
 
-      {/* Everything else, vertically balanced as one group so it always fits without scrolling */}
-      <div style={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 26px", gap: 18, textAlign: "center" }}>
+      {/* Main visual group — pet, title, statement, button, supporting text — centred as one unit, nudged down slightly for balance */}
+      <div style={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 26px", textAlign: "center", transform: "translateY(28px)" }}>
         <div style={{ width: 230, height: 230, flexShrink: 0, filter: "drop-shadow(0 16px 40px rgba(61,43,31,0.28))" }}>
           <ImageWithFallback src={redPandaCoffee} alt="Tend mascot" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
         </div>
 
-        <div>
-          <h1 style={{ fontSize: 44, fontWeight: 900, color: TXT, letterSpacing: "-0.5px", margin: "0 0 6px", fontFamily: FF }}>Tend</h1>
-          <p style={{ fontSize: 15, fontWeight: 700, color: TXT, lineHeight: 1.3, margin: "0 auto", maxWidth: 300 }}>A low-pressure gamified CGM companion for young people with Type 1 Diabetes.</p>
-        </div>
+        <h1 style={{ fontSize: 44, fontWeight: 900, color: TXT, letterSpacing: "-0.5px", margin: "18px 0 0", fontFamily: FF }}>Tend</h1>
 
-        <div style={{ width: "100%", background: "rgba(255,252,248,0.42)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)", border: "1px solid rgba(255,255,255,0.55)", borderRadius: 20, padding: "14px 18px 12px", boxShadow: "0 8px 24px rgba(61,43,31,0.08)", flexShrink: 0 }}>
-          <p style={{ fontSize: 11.5, fontWeight: 500, color: MUTED, margin: "0 0 6px", lineHeight: 1.35, fontFamily: FF }}>Tend combines an AI virtual pet with non-punitive game elements to support:</p>
-          <div>
-            {["Understand glucose trends", "Record daily context", "Engage through play and community"].map((t, i) => (
-              <div key={t} style={{ padding: "7px 0", borderTop: i === 0 ? "none" : "1px solid rgba(61,43,31,0.09)" }}>
-                <span style={{ fontSize: 13.5, fontWeight: 700, color: TXT, fontFamily: FF }}>{t}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+        <p style={{ fontSize: 19, fontWeight: 600, color: TXT, lineHeight: 1.25, margin: "12px 0 0", maxWidth: 300, fontFamily: FF }}>
+          A low-pressure gamified CGM companion<br />for young people with Type 1 Diabetes.
+        </p>
 
-        <button onClick={onNext} style={{ width: "100%", padding: "17px 0", borderRadius: 18, background: ROSE, color: "#fff", border: "none", cursor: "pointer", fontFamily: FF, fontWeight: 800, fontSize: 16, boxShadow: "0 8px 24px rgba(196,145,122,0.35)", flexShrink: 0 }}>Enter Prototype</button>
+        <button onClick={onNext} style={{ width: "100%", padding: "17px 0", borderRadius: 18, background: ROSE, color: "#fff", border: "none", cursor: "pointer", fontFamily: FF, fontWeight: 800, fontSize: 16, boxShadow: "0 8px 24px rgba(196,145,122,0.35)", marginTop: 32, flexShrink: 0 }}>Enter Prototype</button>
+
+        <p style={{ fontSize: 11, fontWeight: 400, color: MUTED, lineHeight: 1.4, margin: "13px 0 0", maxWidth: 300, fontFamily: FF }}>AI-assisted trend guidance · Lightweight logging · Play and community</p>
       </div>
     </div>
   );
