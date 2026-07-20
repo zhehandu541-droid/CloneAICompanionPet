@@ -519,9 +519,9 @@ function WelcomeScreen({ onNext }: { onNext: () => void }) {
       <div style={{ position: "absolute", inset: 0, background: "repeating-linear-gradient(115deg, transparent, transparent 18px, rgba(255,255,255,0.10) 18px, rgba(255,255,255,0.10) 19px)", pointerEvents: "none" }} />
 
       {/* Top research notice — one plain sentence, secondary in weight, never overlaps the pet below it */}
-      <div style={{ position: "absolute", top: 58, left: 16, right: 16, zIndex: 50, background: "rgba(255,255,255,0.50)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.60)", borderRadius: 16, padding: "10px 14px" }}>
+      <div style={{ position: "absolute", top: 68, left: 16, right: 16, zIndex: 50, background: "rgba(255,255,255,0.50)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.60)", borderRadius: 16, padding: "10px 14px" }}>
         <p style={{ margin: 0, fontSize: 11, fontWeight: 400, lineHeight: 1.45, color: "#746761", textAlign: "left", fontFamily: FF }}>
-          Tend is an AI-powered research prototype using simulated CGM data to offer general guidance on glucose trends and daily context; it does not provide diagnosis or insulin-dosing advice.
+          Tend explores how low-pressure gamification can support engagement with continuous glucose monitoring (CGM) data. This AI-powered research prototype uses simulated data for trend interpretation and lightweight logging, and does not provide diagnosis or insulin-dosing advice.
         </p>
       </div>
 
@@ -533,11 +533,11 @@ function WelcomeScreen({ onNext }: { onNext: () => void }) {
 
         <h1 style={{ fontSize: 44, fontWeight: 900, color: "#4B352D", letterSpacing: "-0.5px", margin: "18px 0 0", fontFamily: FF }}>Tend</h1>
 
-        <p style={{ fontSize: 15, fontWeight: 600, color: "#6B554A", lineHeight: 1.35, margin: "10px 0 0", fontFamily: FF }}>
-          A low-pressure gamified CGM companion for young people with Type 1 Diabetes.
+        <p style={{ fontSize: 15, fontWeight: 500, color: "#6B554A", lineHeight: 1.4, letterSpacing: "0.1px", margin: "10px 0 0", fontFamily: FF }}>
+          A low-pressure gamified CGM companion for<br />young people with Type 1 Diabetes.
         </p>
 
-        <button onClick={onNext} style={{ width: "100%", padding: "17px 0", borderRadius: 18, background: ROSE, color: "#fff", border: "none", cursor: "pointer", fontFamily: FF, fontWeight: 800, fontSize: 16, boxShadow: "0 8px 24px rgba(196,145,122,0.35)", marginTop: 56, flexShrink: 0 }}>Enter Prototype</button>
+        <button onClick={onNext} style={{ width: "100%", padding: "17px 0", borderRadius: 18, background: ROSE, color: "#fff", border: "none", cursor: "pointer", fontFamily: FF, fontWeight: 800, fontSize: 16, boxShadow: "0 8px 24px rgba(196,145,122,0.35)", marginTop: 70, flexShrink: 0 }}>Enter Prototype</button>
       </div>
     </div>
   );
