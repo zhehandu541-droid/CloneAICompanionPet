@@ -521,7 +521,7 @@ function WelcomeScreen({ onNext }: { onNext: () => void }) {
       {/* Top research notice — one plain sentence, secondary in weight, never overlaps the pet below it */}
       <div style={{ position: "absolute", top: 68, left: 16, right: 16, zIndex: 50, background: "rgba(255,255,255,0.50)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.60)", borderRadius: 16, padding: "10px 14px" }}>
         <p style={{ margin: 0, fontSize: 11, fontWeight: 400, lineHeight: 1.45, color: "#746761", textAlign: "left", fontFamily: FF }}>
-          Tend explores how low-pressure gamification can support engagement with continuous glucose monitoring (CGM) data. This AI-powered research prototype uses simulated data for trend interpretation and lightweight logging, and does not provide diagnosis or insulin-dosing advice.
+          Tend is an AI-powered research prototype exploring how low-pressure gamification can support users' engagement with simulated continuous glucose monitoring (CGM) data. It offers AI-assisted trend interpretation, lightweight logging, and a range of gamified interactions, but does not provide diagnosis or insulin-dosing advice.
         </p>
       </div>
 
