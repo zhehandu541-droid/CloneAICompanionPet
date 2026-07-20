@@ -514,7 +514,7 @@ function WelcomeScreen({ onNext }: { onNext: () => void }) {
   return (
     <div style={{
       height: "100%", overflow: "hidden", position: "relative",
-      background: "radial-gradient(ellipse at 25% 22%, rgba(255,200,210,0.85) 0%, transparent 55%), radial-gradient(ellipse at 78% 14%, rgba(180,230,210,0.80) 0%, transparent 50%), radial-gradient(ellipse at 58% 58%, rgba(255,218,185,0.75) 0%, transparent 50%), radial-gradient(ellipse at 8% 66%, rgba(200,205,240,0.70) 0%, transparent 48%), radial-gradient(ellipse at 50% 98%, rgba(255,205,190,0.55) 0%, transparent 55%), #F0EBE3",
+      background: "radial-gradient(ellipse at 25% 22%, rgba(255,200,210,0.55) 0%, transparent 55%), radial-gradient(ellipse at 78% 14%, rgba(180,230,210,0.50) 0%, transparent 50%), radial-gradient(ellipse at 58% 58%, rgba(255,218,185,0.45) 0%, transparent 50%), radial-gradient(ellipse at 8% 66%, rgba(200,205,240,0.42) 0%, transparent 48%), radial-gradient(ellipse at 50% 98%, rgba(255,205,190,0.35) 0%, transparent 55%), #F0EBE3",
     }}>
       <div style={{ position: "absolute", inset: 0, background: "repeating-linear-gradient(115deg, transparent, transparent 18px, rgba(255,255,255,0.10) 18px, rgba(255,255,255,0.10) 19px)", pointerEvents: "none" }} />
 
@@ -526,15 +526,15 @@ function WelcomeScreen({ onNext }: { onNext: () => void }) {
       </div>
 
       {/* Main visual group — pet, title, statement, supporting line, button — centred as one unit, nudged down slightly for balance */}
-      <div style={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 16px", textAlign: "center", transform: "translateY(28px)" }}>
+      <div style={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 16px", textAlign: "center", transform: "translateY(48px)" }}>
         <div style={{ width: 230, height: 230, flexShrink: 0, filter: "drop-shadow(0 16px 40px rgba(61,43,31,0.28))" }}>
           <ImageWithFallback src={redPandaCoffee} alt="Tend mascot" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
         </div>
 
         <h1 style={{ fontSize: 44, fontWeight: 900, color: TXT, letterSpacing: "-0.5px", margin: "18px 0 0", fontFamily: FF }}>Tend</h1>
 
-        <p style={{ fontSize: 22, fontWeight: 600, color: TXT, lineHeight: 1.22, margin: "12px 0 0", fontFamily: FF }}>
-          A low-pressure gamified CGM companion<br />for young people with Type 1 Diabetes.
+        <p style={{ fontSize: 15, fontWeight: 600, color: TXT, lineHeight: 1.35, margin: "10px 0 0", fontFamily: FF }}>
+          A low-pressure gamified CGM companion for young people with Type 1 Diabetes.
         </p>
 
         <button onClick={onNext} style={{ width: "100%", padding: "17px 0", borderRadius: 18, background: ROSE, color: "#fff", border: "none", cursor: "pointer", fontFamily: FF, fontWeight: 800, fontSize: 16, boxShadow: "0 8px 24px rgba(196,145,122,0.35)", marginTop: 30, flexShrink: 0 }}>Enter Prototype</button>
